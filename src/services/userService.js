@@ -43,10 +43,35 @@ const handleAddNewUser = async (newUserData) => {
     });
 }
 
-const handleDeleteUserById = async () => {
+const handleDeleteUserById = async (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-
+            let userData = {}
+            let user = await User.findOne({
+                attributes: {
+                    exclude: ["password", "role"]
+                },
+                where: {
+                    id: userId,
+                    role: "user"
+                },
+                raw: true
+            })
+            if (!user) {
+                userData.errCode = 3;
+                userData.errMessage = "User not found";
+                userData.data = {};
+            } else {
+                userData.errCode = 0;
+                userData.errMessage = "OK";
+                userData.data = user;
+                await User.destroy({
+                    where: {
+                        id : userId
+                    }
+                })
+            }
+            resolve(userData);
         }
         catch (err) {
             reject(err);
@@ -104,10 +129,30 @@ const handleUpdateUser = async (newUserData) => {
     });
 }
 
-const handleGetUserById = async () => {
+const handleGetUserById = async (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-
+            let userData = {}
+            let user = await User.findOne({
+                attributes: {
+                    exclude: ["password", "role"]
+                },
+                where: {
+                    id: userId,
+                    role: "user"
+                }, 
+                raw: true
+            })
+            if (!user) {
+                userData.errCode = 3;
+                userData.errMessage = "User not found";
+                userData.data = {};
+            } else {
+                userData.errCode = 0;
+                userData.errMessage = "OK";
+                userData.data = user;
+            }
+            resolve(userData);
         }
         catch (err) {
             reject(err);
@@ -118,14 +163,31 @@ const handleGetUserById = async () => {
 const handleGetAllUser = async () => {
     return new Promise(async (resolve, reject) => {
         try {
-
+            let usersData = {};
+            let users = await User.findAll({
+                attributes: {
+                    exclude: ["password", "role"]
+                },
+                where: {
+                    role: "user"
+                }
+            });
+            if (!users) {
+                usersData.errCode = 3;
+                usersData.errMessage = "Users not found";
+                usersData.data = {};
+            } else {
+                usersData.errCode = 0;
+                usersData.errMessage = "OK";
+                usersData.data = users;
+            }
+            resolve(usersData);
         }
         catch (err) {
             reject(err);
         }
     });
 }
-
 
 const isUsernameExisted = (username) => {
     return new Promise(async (resolve, reject) => {
