@@ -25,7 +25,7 @@ Run command **```npm install```** to install all libraries used in this project.
     - ```Problem``` : Infomations of problems.
     - ```Group``` : Type of problems.
     - ```SubGroup``` : Small problem types in each groups.
-  - ```Submission``` : Log the infomations of each submission.
+    - ```Submission``` : Log the infomations of each submission.
     - ```Dataset``` : Dataset was used each problem.
 
 # 4, Run project.
