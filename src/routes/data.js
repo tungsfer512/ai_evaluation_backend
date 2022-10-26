@@ -2,12 +2,12 @@ const express = require('express');
 
 const DataController = require('../controllers/dataController');
 
-let groupRouter = express.Router();
+let dataRouter = express.Router();
 
-groupRouter.post('/add', DataController.addNewData);
-groupRouter.delete('/delete/:id', DataController.deleteDataById);
-groupRouter.put('/edit/:id', DataController.updateData);
-groupRouter.get('/:id', DataController.getDataById);
-groupRouter.get('/', DataController.getAllData);
+dataRouter.post('/add', DataController.addNewData);
+dataRouter.delete('/delete/:id', DataController.deleteDataById);
+dataRouter.put('/edit/:id', DataController.updateData);
+dataRouter.get('/:id', DataController.getDataById);
+dataRouter.get('/', DataController.getAllData);
 
-module.exports = groupRouter;
+module.exports = dataRouter;

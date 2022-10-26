@@ -11,10 +11,13 @@ Run command **```npm install```** to install all libraries used in this project.
 
 ## 3, Error code
 
-- ```0```: **```OK. No errors occurred```**.
-- ```1```: **```Error. Missing input(s) values```**.
-- ```2```: **```Error. Duplicate infomations```**.
-- ```3```: **```Error. Infomation(s) not found```**.
+- ```200```: **```OK. No errors occurred.```**.
+- ```400```: **```Error. Missing input(s) values.```**.
+- ```400```: **```Error. Duplicate infomations.```**.
+- ```401```: **```Error. Unauthenticated.```**.
+- ```403```: **```Error. Forbidden.```**.
+- ```404```: **```Error. Infomation(s) not found.```**.
+- ```500```: **```Error.```**.
 
 ## 4, Setup database
 

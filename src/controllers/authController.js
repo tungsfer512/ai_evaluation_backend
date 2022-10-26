@@ -2,7 +2,7 @@ const { User } = require('../models/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const addNewUser = async (req, res) => {
+const register = async (req, res) => {
     try {
         let newUserData = req.body;
         if (
@@ -58,34 +58,63 @@ const addNewUser = async (req, res) => {
     }
 };
 
-const getAllUser = async (req, res) => {
+const login = async (req, res) => {
     try {
-        let users = await User.findAll({
-            attributes: {
-                exclude: ['password']
-            },
+        let reqUserData = req.body;
+        if (
+            !reqUserData.username ||
+            !reqUserData.password
+        ) {
+            return res.status(400).json({
+                resCode: 400,
+                resMessage: 'Missing input value(s).'
+            })
+        }
+        let userData = await User.findOne({
             where: {
-                role: 'user'
+                username: reqUserData.username
+            },
+            raw: true
+        });
+        if (!userData) {
+            return res.status(404).json({
+                resCode: 404,
+                resMessage: 'User not found.'
+            })
+        }
+        let validPassword = await bcrypt.compare(reqUserData.password, userData.password);
+        if (!validPassword) {
+            return res.status(404).json({
+                resCode: 404,
+                resMessage: 'Wrong password.'
+            })
+        }
+        let resData = userData
+        delete resData.password
+        const accessToken = jwt.sign(
+            {
+                id: userData.id,
+                role: userData.role
+            },
+            process.env.JWT_ACCESS_KEY,
+            {
+                expiresIn: '30s'
+            });
+        return res.status(200).json({
+            resCode: 404,
+            resMessage: 'OK',
+            data: {
+                ...resData,
+                accessToken: accessToken
             }
         });
-        if(!users) {
-            return res.status(404).json({
-                resCode: 404, 
-                resMessage: 'User not found.'
-            });
-        }
-        return res.status(200).json({
-            resCode: 200, 
-            resMessage: 'OK', 
-            data: users
-        })
-    } catch(err) {
+    } catch (err) {
         return res.status(500).json({
             resCode: 500,
             resMessage: err
         });
     }
-}   
+};
 
 const isUsernameExisted = (username) => {
     return new Promise(async (resolve, reject) => {
@@ -134,6 +163,6 @@ const isEmailExisted = (email) => {
 };
 
 module.exports = {
-    addNewUser,
-    getAllUser,
+    register,
+    login
 };
