@@ -54,21 +54,18 @@ const register = async (req, res) => {
         return res.status(500).json({
             resCode: 500,
             resMessage: err
-        })
+        });
     }
 };
 
 const login = async (req, res) => {
     try {
         let reqUserData = req.body;
-        if (
-            !reqUserData.username ||
-            !reqUserData.password
-        ) {
+        if (!reqUserData.username || !reqUserData.password) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
-            })
+            });
         }
         let userData = await User.findOne({
             where: {
@@ -80,17 +77,20 @@ const login = async (req, res) => {
             return res.status(404).json({
                 resCode: 404,
                 resMessage: 'User not found.'
-            })
+            });
         }
-        let validPassword = await bcrypt.compare(reqUserData.password, userData.password);
+        let validPassword = await bcrypt.compare(
+            reqUserData.password,
+            userData.password
+        );
         if (!validPassword) {
             return res.status(404).json({
                 resCode: 404,
                 resMessage: 'Wrong password.'
-            })
+            });
         }
-        let resData = userData
-        delete resData.password
+        let resData = userData;
+        delete resData.password;
         const accessToken = jwt.sign(
             {
                 id: userData.id,
@@ -98,10 +98,11 @@ const login = async (req, res) => {
             },
             process.env.JWT_ACCESS_KEY,
             {
-                expiresIn: '30s'
-            });
+                expiresIn: '30m'
+            }
+        );
         return res.status(200).json({
-            resCode: 404,
+            resCode: 200,
             resMessage: 'OK',
             data: {
                 ...resData,

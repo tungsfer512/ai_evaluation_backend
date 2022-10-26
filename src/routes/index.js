@@ -1,4 +1,4 @@
-// const userRouter = require('./user');
+const userRouter = require('./user');
 // const problemRouter = require('./problem');
 // const dataRouter = require('./data');
 // const groupRouter = require('./group');
@@ -6,14 +6,14 @@
 const authRouter = require('./auth');
 
 const initWebRouter = (app) => {
-    // // Users, login, register
-    // app.use('/api/v1/users', userRouter);
+    // Users, login, register
+    app.use('/api/v1/users', userRouter);
     // // Problems
     // app.use('/api/v1/problems', problemRouter);
     // // Datasets
     // app.use('/api/v1/datas', dataRouter);
-    // // Groups and Sub-Groups
-    // app.use('/api/v1/groups', groupRouter);
+    // Groups and Sub-Groups
+    app.use('/api/v1/groups', groupRouter);
     // // Submissions
     // app.use('/api/v1/submissions', submissionRouter);
     app.use('/api/v1/auth', authRouter);
