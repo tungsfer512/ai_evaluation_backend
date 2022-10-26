@@ -20,7 +20,6 @@ const SubGroup = createSubGroup(sequelize, DataTypes);
 const Dataset = createDataset(sequelize, DataTypes);
 
 const createDB = async () => {
-
     User.hasMany(Submission);
     Submission.belongsTo(User);
 
@@ -40,8 +39,8 @@ const createDB = async () => {
     Problem.belongsTo(SubGroup);
 
     await sequelize.sync({ force: true });
-    console.log("All models were synchronized successfully.");
-}
+    console.log('All models were synchronized successfully.');
+};
 
 module.exports = {
     createDB,
@@ -51,4 +50,4 @@ module.exports = {
     Group,
     SubGroup,
     Dataset
-}
+};

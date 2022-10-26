@@ -1,3 +1,3 @@
-const { createDB } = require("../models/index");
+const { createDB } = require('../models/index');
 
 createDB();

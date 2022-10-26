@@ -10,7 +10,7 @@ const addNewUser = async (req, res) => {
             errCode: userData.errCode,
             errMesssage: userData.errMessage,
             data: userData.data
-        })
+        });
     }
 
     return res.status(200).json({
@@ -18,7 +18,7 @@ const addNewUser = async (req, res) => {
         errMesssage: userData.errMessage,
         data: userData.data
     });
-}
+};
 
 const deleteUserById = async (req, res) => {
     let userId = req.params.id;
@@ -36,7 +36,7 @@ const deleteUserById = async (req, res) => {
         errMesssage: userData.errMessage,
         data: userData.data
     });
-}
+};
 
 const updateUser = async (req, res) => {
     let newUserData = req.body;
@@ -48,7 +48,7 @@ const updateUser = async (req, res) => {
             errCode: userData.errCode,
             errMesssage: userData.errMessage,
             data: userData.data
-        })
+        });
     }
 
     return res.status(200).json({
@@ -56,7 +56,7 @@ const updateUser = async (req, res) => {
         errMesssage: userData.errMessage,
         data: userData.data
     });
-}
+};
 
 const getUserById = async (req, res) => {
     let userId = req.params.id;
@@ -66,7 +66,7 @@ const getUserById = async (req, res) => {
             errCode: userData.errCode,
             errMesssage: userData.errMessage,
             data: userData.data
-        })
+        });
     }
 
     return res.status(200).json({
@@ -74,10 +74,9 @@ const getUserById = async (req, res) => {
         errMesssage: userData.errMessage,
         data: userData.data
     });
-}
+};
 
 const getAllUser = async (req, res) => {
-    
     let usersData = await UserService.handleGetAllUser();
 
     if (usersData.errCode !== 0) {
@@ -85,7 +84,7 @@ const getAllUser = async (req, res) => {
             errCode: usersData.errCode,
             errMesssage: usersData.errMessage,
             data: usersData.data
-        })
+        });
     }
 
     return res.status(200).json({
@@ -93,13 +92,50 @@ const getAllUser = async (req, res) => {
         errMesssage: usersData.errMessage,
         data: usersData.data
     });
-}
+};
 
+const getAdminById = async (req, res) => {
+    let adminId = req.params.id;
+    let adminData = await UserService.handleGetUserById(adminId);
+    if (adminData.errCode !== 0) {
+        return res.status(500).json({
+            errCode: adminData.errCode,
+            errMesssage: adminData.errMessage,
+            data: adminData.data
+        });
+    }
+
+    return res.status(200).json({
+        errCode: adminData.errCode,
+        errMesssage: adminData.errMessage,
+        data: adminData.data
+    });
+};
+
+const getAllAdmin = async (req, res) => {
+    let adminsData = await UserService.handleGetAllAdmin();
+
+    if (adminsData.errCode !== 0) {
+        return res.status(500).json({
+            errCode: adminsData.errCode,
+            errMesssage: adminsData.errMessage,
+            data: adminsData.data
+        });
+    }
+
+    return res.status(200).json({
+        errCode: adminsData.errCode,
+        errMesssage: adminsData.errMessage,
+        data: adminsData.data
+    });
+};
 
 module.exports = {
     addNewUser,
     deleteUserById,
     updateUser,
     getUserById,
-    getAllUser
-}
+    getAllUser,
+    getAdminById,
+    getAllAdmin
+};

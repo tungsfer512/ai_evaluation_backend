@@ -1,16 +1,20 @@
 const express = require('express');
-require('dotenv').config()
+const dotenv = require('dotenv');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
-// const configResources = require('./config/resources');
 const initWebRouters = require('./routes/index');
 const connectDB = require('./config/connectDB');
 
+dotenv.config();
+
 let app = express();
 
+app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// configResources(app);
 initWebRouters(app);
 
 connectDB();

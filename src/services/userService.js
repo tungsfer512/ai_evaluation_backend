@@ -4,31 +4,34 @@ const handleAddNewUser = async (newUserData) => {
     return new Promise(async (resolve, reject) => {
         try {
             let userData = {};
-
-            if (!newUserData.username ||
+            if (
+                !newUserData.username ||
                 !newUserData.password ||
                 !newUserData.email ||
                 !newUserData.firstName ||
-                !newUserData.lastName) {
+                !newUserData.lastName
+            ) {
                 userData.errCode = 1;
                 userData.errMessage = 'Missing input(s) parameters';
                 userData.data = {};
             } else {
                 let isEmailExist = await isEmailExisted(newUserData.email);
-                let isUsernameExist = await isUsernameExisted(newUserData.username);
+                let isUsernameExist = await isUsernameExisted(
+                    newUserData.username
+                );
                 if (isUsernameExist) {
                     userData.errCode = 2;
-                    userData.errMessage = "Username already existed, please choose another name!!!";
+                    userData.errMessage =
+                        'Username already existed, please choose another name!!!';
                     userData.data = {};
-                }
-                else if (isEmailExist) {
+                } else if (isEmailExist) {
                     userData.errCode = 2;
-                    userData.errMessage = "Email already used, please choose another email!!!";
+                    userData.errMessage =
+                        'Email already used, please choose another email!!!';
                     userData.data = {};
-                }
-                else {
+                } else {
                     userData.errCode = 0;
-                    userData.errMessage = "OK";
+                    userData.errMessage = 'OK';
                     userData.data = newUserData;
                     let NEWUSER = new User(newUserData);
                     NEWUSER.save();
@@ -36,48 +39,45 @@ const handleAddNewUser = async (newUserData) => {
                 }
             }
             resolve(userData);
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
     });
-}
+};
 
 const handleDeleteUserById = async (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userData = {}
+            let userData = {};
             let user = await User.findOne({
                 attributes: {
-                    exclude: ["password", "role"]
+                    exclude: ['password', 'role']
                 },
                 where: {
-                    id: userId,
-                    role: "user"
+                    id: userId
                 },
                 raw: true
-            })
+            });
             if (!user) {
                 userData.errCode = 3;
-                userData.errMessage = "User not found";
+                userData.errMessage = 'User not found';
                 userData.data = {};
             } else {
                 userData.errCode = 0;
-                userData.errMessage = "OK";
+                userData.errMessage = 'OK';
                 userData.data = user;
                 await User.destroy({
                     where: {
-                        id : userId
+                        id: userId
                     }
-                })
+                });
             }
             resolve(userData);
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
     });
-}
+};
 
 const handleUpdateUser = async (newUserData) => {
     return new Promise(async (resolve, reject) => {
@@ -91,11 +91,12 @@ const handleUpdateUser = async (newUserData) => {
                     id: newUserData.id
                 },
                 raw: true
-            })
-
-            if (!newUserData.email ||
+            });
+            if (
+                !newUserData.email ||
                 !newUserData.firstName ||
-                !newUserData.lastName) {
+                !newUserData.lastName
+            ) {
                 updatedUserData.errCode = 1;
                 updatedUserData.errMessage = 'Missing input(s) parameters';
                 updatedUserData.data = {};
@@ -103,62 +104,63 @@ const handleUpdateUser = async (newUserData) => {
                 let isEmailExist = await isEmailExisted(newUserData.email);
                 if (isEmailExist && newUserData.email !== userData.email) {
                     updatedUserData.errCode = 2;
-                    updatedUserData.errMessage = "Email already used, please choose another email!!!";
+                    updatedUserData.errMessage =
+                        'Email already used, please choose another email!!!';
                     updatedUserData.data = {};
-                }
-                else {
+                } else {
                     updatedUserData.errCode = 0;
-                    updatedUserData.errMessage = "OK";
+                    updatedUserData.errMessage = 'OK';
                     updatedUserData.data = userData;
-                    await User.update({
-                        email: newUserData.email,
-                        firstName: newUserData.firstName,
-                        lastName: newUserData.lastName
-                    }, {
-                        where: {
-                            id: newUserData.id
+                    await User.update(
+                        {
+                            email: newUserData.email,
+                            firstName: newUserData.firstName,
+                            lastName: newUserData.lastName
+                        },
+                        {
+                            where: {
+                                id: newUserData.id
+                            }
                         }
-                    });
+                    );
                 }
             }
             resolve(updatedUserData);
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
     });
-}
+};
 
 const handleGetUserById = async (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userData = {}
+            let userData = {};
             let user = await User.findOne({
                 attributes: {
-                    exclude: ["password", "role"]
+                    exclude: ['password']
                 },
                 where: {
                     id: userId,
-                    role: "user"
-                }, 
+                    role: 'user'
+                },
                 raw: true
-            })
+            });
             if (!user) {
                 userData.errCode = 3;
-                userData.errMessage = "User not found";
+                userData.errMessage = 'User not found';
                 userData.data = {};
             } else {
                 userData.errCode = 0;
-                userData.errMessage = "OK";
+                userData.errMessage = 'OK';
                 userData.data = user;
             }
             resolve(userData);
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
     });
-}
+};
 
 const handleGetAllUser = async () => {
     return new Promise(async (resolve, reject) => {
@@ -166,28 +168,85 @@ const handleGetAllUser = async () => {
             let usersData = {};
             let users = await User.findAll({
                 attributes: {
-                    exclude: ["password", "role"]
+                    exclude: ['password']
                 },
                 where: {
-                    role: "user"
+                    role: 'user'
                 }
             });
             if (!users) {
                 usersData.errCode = 3;
-                usersData.errMessage = "Users not found";
+                usersData.errMessage = 'Users not found';
                 usersData.data = {};
             } else {
                 usersData.errCode = 0;
-                usersData.errMessage = "OK";
+                usersData.errMessage = 'OK';
                 usersData.data = users;
             }
             resolve(usersData);
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
     });
-}
+};
+
+const handleGetAdminById = async (adminId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let userData = {};
+            let user = await User.findOne({
+                attributes: {
+                    exclude: ['password']
+                },
+                where: {
+                    id: adminId,
+                    role: 'admin'
+                },
+                raw: true
+            });
+            if (!user) {
+                userData.errCode = 3;
+                userData.errMessage = 'Administrator not found';
+                userData.data = {};
+            } else {
+                userData.errCode = 0;
+                userData.errMessage = 'OK';
+                userData.data = user;
+            }
+            resolve(userData);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
+const handleGetAllAdmin = async () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let usersData = {};
+            let users = await User.findAll({
+                attributes: {
+                    exclude: ['password']
+                },
+                where: {
+                    role: 'admin'
+                }
+            });
+            if (!users) {
+                usersData.errCode = 3;
+                usersData.errMessage = 'Administrators not found';
+                usersData.data = {};
+            } else {
+                usersData.errCode = 0;
+                usersData.errMessage = 'OK';
+                usersData.data = users;
+            }
+            resolve(usersData);
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
 
 const isUsernameExisted = (username) => {
     return new Promise(async (resolve, reject) => {
@@ -206,12 +265,11 @@ const isUsernameExisted = (username) => {
             } else {
                 resolve(false);
             }
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
-    })
-}
+    });
+};
 
 const isEmailExisted = (email) => {
     return new Promise(async (resolve, reject) => {
@@ -230,17 +288,18 @@ const isEmailExisted = (email) => {
             } else {
                 resolve(false);
             }
-        }
-        catch (err) {
+        } catch (err) {
             reject(err);
         }
-    })
-}
+    });
+};
 
 module.exports = {
     handleAddNewUser,
     handleDeleteUserById,
     handleUpdateUser,
     handleGetUserById,
-    handleGetAllUser
-}
+    handleGetAllUser,
+    handleGetAdminById,
+    handleGetAllAdmin
+};
