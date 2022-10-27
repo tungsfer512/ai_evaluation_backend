@@ -20,22 +20,40 @@ const SubGroup = createSubGroup(sequelize, DataTypes);
 const Dataset = createDataset(sequelize, DataTypes);
 
 const createDB = async () => {
-    User.hasMany(Submission);
+    User.hasMany(Submission, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    });
     Submission.belongsTo(User);
 
-    Problem.hasMany(Submission);
+    Problem.hasMany(Submission, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    });
     Submission.belongsTo(Problem);
 
-    Problem.hasMany(Dataset);
+    Problem.hasMany(Dataset, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    });
     Dataset.belongsTo(Problem);
 
-    Group.hasMany(SubGroup);
+    Group.hasMany(SubGroup, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    });
     SubGroup.belongsTo(Group);
 
-    Group.hasMany(Problem);
+    Group.hasMany(Problem, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    });
     Problem.belongsTo(Group);
 
-    SubGroup.hasMany(Problem);
+    SubGroup.hasMany(Problem, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    });
     Problem.belongsTo(SubGroup);
 
     await sequelize.sync({ force: true });

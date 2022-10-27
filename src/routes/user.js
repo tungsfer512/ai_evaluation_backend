@@ -16,32 +16,6 @@ userRouter.post(
     MiddlewareController.verify_Token_Superadmin_Role,
     UserController.addNewUser
 );
-// Read
-userRouter.get(
-    '/users/:id',
-    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
-    UserController.getUserById
-);
-userRouter.get(
-    '/admins/:id',
-    MiddlewareController.verify_Token_AdminId_Superadmin_Role,
-    UserController.getUserById
-);
-userRouter.get(
-    '/superadmins/:id',
-    MiddlewareController.verify_Token_SuperadminId,
-    UserController.getUserById
-);
-userRouter.get(
-    '/users',
-    MiddlewareController.verify_Token_Admin_Superadmin_Role,
-    UserController.getAllUser
-);
-userRouter.get(
-    '/admins',
-    MiddlewareController.verify_Token_Superadmin_Role,
-    UserController.getAllAdmin
-);
 // Update
 userRouter.put(
     '/users/edit/:id',
@@ -73,6 +47,32 @@ userRouter.delete(
     '/superadmins/delete/:id',
     MiddlewareController.verify_Token_SuperadminId,
     UserController.deleteUserById
+);
+// Read
+userRouter.get(
+    '/users/:id',
+    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
+    UserController.getUserById
+);
+userRouter.get(
+    '/admins/:id',
+    MiddlewareController.verify_Token_AdminId_Superadmin_Role,
+    UserController.getUserById
+);
+userRouter.get(
+    '/superadmins/:id',
+    MiddlewareController.verify_Token_SuperadminId,
+    UserController.getUserById
+);
+userRouter.get(
+    '/users',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    UserController.getAllUser
+);
+userRouter.get(
+    '/admins',
+    MiddlewareController.verify_Token_Superadmin_Role,
+    UserController.getAllAdmin
 );
 
 module.exports = userRouter;

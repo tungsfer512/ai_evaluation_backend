@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const verifyToken = (req, res, next) => {
+const verify_Token = (req, res, next) => {
     const token = req.headers.token;
     if (token) {
         const accessToken = token.trim();
@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
     }
 };
 const verify_Token_Admin_Superadmin_Role = (req, res, next) => {
-    verifyToken(req, res, () => {
+    verify_Token(req, res, () => {
         console.log(req.user.role);
         if (req.user.role === 'admin' || req.user.role === 'superadmin') {
             next();
@@ -36,7 +36,7 @@ const verify_Token_Admin_Superadmin_Role = (req, res, next) => {
     });
 };
 const verify_Token_Superadmin_Role = (req, res, next) => {
-    verifyToken(req, res, () => {
+    verify_Token(req, res, () => {
         console.log(req.user.role);
         if (req.user.role === 'superadmin') {
             next();
@@ -50,7 +50,7 @@ const verify_Token_Superadmin_Role = (req, res, next) => {
     });
 };
 const verify_Token_UserId_Admin_Superadmin_Role = (req, res, next) => {
-    verifyToken(req, res, () => {
+    verify_Token(req, res, () => {
         console.log(req.user.role);
         if (
             req.user.id === req.params.id ||
@@ -68,7 +68,7 @@ const verify_Token_UserId_Admin_Superadmin_Role = (req, res, next) => {
     });
 };
 const verify_Token_AdminId_Superadmin_Role = (req, res, next) => {
-    verifyToken(req, res, () => {
+    verify_Token(req, res, () => {
         console.log(req.user.role);
         if (req.user.id === req.params.id || req.user.role === 'superadmin') {
             next();
@@ -82,7 +82,7 @@ const verify_Token_AdminId_Superadmin_Role = (req, res, next) => {
     });
 };
 const verify_Token_SuperadminId = (req, res, next) => {
-    verifyToken(req, res, () => {
+    verify_Token(req, res, () => {
         if (req.user.id === req.params.id && req.user.role === 'superadmin') {
             next();
         } else {
@@ -95,7 +95,7 @@ const verify_Token_SuperadminId = (req, res, next) => {
     });
 };
 module.exports = {
-    verifyToken,
+    verify_Token,
     verify_Token_Admin_Superadmin_Role,
     verify_Token_Superadmin_Role,
     verify_Token_UserId_Admin_Superadmin_Role,
