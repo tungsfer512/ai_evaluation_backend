@@ -7,67 +7,72 @@ let userRouter = express.Router();
 
 // Create
 userRouter.post(
-    '/add/user',
-    MiddlewareController.verifyTokenUserIdAndSuperRole,
+    '/users/add',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
     UserController.addNewUser
 );
 userRouter.post(
-    '/add/admin',
-    MiddlewareController.verifyTokenAdminIdAndSuperRole,
-    UserController.addNewAdmin
+    '/admins/add',
+    MiddlewareController.verify_Token_Superadmin_Role,
+    UserController.addNewUser
 );
 // Read
 userRouter.get(
-    '/user/:id',
-    MiddlewareController.verifyTokenUserIdAndSuperRole,
+    '/users/:id',
+    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
     UserController.getUserById
 );
 userRouter.get(
-    '/admin/:id',
-    MiddlewareController.verifyTokenAdminIdAndSuperRole,
-    UserController.getAdminById
+    '/admins/:id',
+    MiddlewareController.verify_Token_AdminId_Superadmin_Role,
+    UserController.getUserById
 );
 userRouter.get(
-    '/superadmin/:id',
-    MiddlewareController.verifyTokenAndSuperadminID,
-    UserController.getSuperadminById
+    '/superadmins/:id',
+    MiddlewareController.verify_Token_SuperadminId,
+    UserController.getUserById
 );
 userRouter.get(
-    '/user',
-    MiddlewareController.verifyTokenUserIdAndSuperRole,
+    '/users',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
     UserController.getAllUser
 );
 userRouter.get(
-    '/admin',
-    MiddlewareController.verifyTokenAdminIdAndSuperRole,
+    '/admins',
+    MiddlewareController.verify_Token_Superadmin_Role,
     UserController.getAllAdmin
 );
 // Update
 userRouter.put(
-    '/edit/user/:id',
-    MiddlewareController.verifyTokenUserIdAndSuperRole,
-    UserController.updateUser
+    '/users/edit/:id',
+    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
+    UserController.updateUserById
 );
 userRouter.put(
-    '/edit/admin/:id',
-    MiddlewareController.verifyTokenAdminIdAndSuperRole,
-    UserController.updateAdmin
+    '/admins/edit/:id',
+    MiddlewareController.verify_Token_AdminId_Superadmin_Role,
+    UserController.updateUserById
 );
 userRouter.put(
-    '/edit/superadmin/:id',
-    MiddlewareController.verifyTokenAndSuperadminID,
-    UserController.updateSuperadmin
+    '/superadmins/edit/:id',
+    MiddlewareController.verify_Token_SuperadminId,
+    UserController.updateUserById
 );
 // Delete
 userRouter.delete(
-    '/delete/user/:id',
-    MiddlewareController.verifyTokenUserIdAndSuperRole,
+    '/users/delete/:id',
+    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
     UserController.deleteUserById
 );
 userRouter.delete(
-    '/delete/admin/:id',
-    MiddlewareController.verifyTokenAdminIdAndSuperRole,
-    UserController.deleteAdminById
+    '/admins/delete/:id',
+    MiddlewareController.verify_Token_AdminId_Superadmin_Role,
+    UserController.deleteUserById
+);
+userRouter.delete(
+    '/superadmins/delete/:id',
+    MiddlewareController.verify_Token_SuperadminId,
+    UserController.deleteUserById
 );
 
 module.exports = userRouter;

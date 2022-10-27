@@ -1,2 +1,15 @@
 console.log(require('crypto').randomBytes(64).toString('hex'))
-// '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611'
+
+'/users/add',               verify_Token_Admin_Superadmin_Role,                 addNewUser
+'/admins/add',              verify_Token_Superadmin_Role,                       addNewUser
+'/users/:id',               verify_Token_UserId_Admin_Superadmin_Role,          getUserById
+'/admins/:id',              verify_Token_AdminId_Superadmin_Role,               getUserById
+'/superadmins/:id',         verify_Token_SuperadminId,                          getUserById
+'/users',                   verify_Token_Admin_Superadmin_Role,                 getAllUser
+'/admins',                  verify_Token_Superadmin_Role,                       getAllAdmin
+'/users/edit/:id',          verify_Token_UserId_Admin_Superadmin_Role,          updateUserById
+'/admins/edit/:id',         verify_Token_AdminId_Superadmin_Role,               updateUserById
+'/superadmins/edit/:id',    verify_Token_SuperadminId,                          updateUserById
+'/users/delete/:id',        verify_Token_UserId_Admin_Superadmin_Role,          deleteUserById
+'/admins/delete/:id',       verify_Token_AdminId_Superadmin_Role,               deleteUserById
+'/superadmins/delete/:id',  verify_Token_SuperadminId,                          deleteUserById

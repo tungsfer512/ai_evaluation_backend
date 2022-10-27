@@ -21,8 +21,35 @@ const verifyToken = (req, res, next) => {
         });
     }
 };
-
-const verifyTokenUserIdAndSuperRole = (req, res, next) => {
+const verify_Token_Admin_Superadmin_Role = (req, res, next) => {
+    verifyToken(req, res, () => {
+        console.log(req.user.role);
+        if (req.user.role === 'admin' || req.user.role === 'superadmin') {
+            next();
+        } else {
+            return res.status(403).json({
+                resCode: 403,
+                resMessage:
+                    "You are not allowed to modify other's information(s)."
+            });
+        }
+    });
+};
+const verify_Token_Superadmin_Role = (req, res, next) => {
+    verifyToken(req, res, () => {
+        console.log(req.user.role);
+        if (req.user.role === 'superadmin') {
+            next();
+        } else {
+            return res.status(403).json({
+                resCode: 403,
+                resMessage:
+                    "You are not allowed to modify other's information(s)."
+            });
+        }
+    });
+};
+const verify_Token_UserId_Admin_Superadmin_Role = (req, res, next) => {
     verifyToken(req, res, () => {
         console.log(req.user.role);
         if (
@@ -40,8 +67,7 @@ const verifyTokenUserIdAndSuperRole = (req, res, next) => {
         }
     });
 };
-
-const verifyTokenAdminIdAndSuperRole = (req, res, next) => {
+const verify_Token_AdminId_Superadmin_Role = (req, res, next) => {
     verifyToken(req, res, () => {
         console.log(req.user.role);
         if (req.user.id === req.params.id || req.user.role === 'superadmin') {
@@ -55,10 +81,9 @@ const verifyTokenAdminIdAndSuperRole = (req, res, next) => {
         }
     });
 };
-
-const verifyTokenAndSuperadminID = (req, res, next) => {
+const verify_Token_SuperadminId = (req, res, next) => {
     verifyToken(req, res, () => {
-        if (req.user.id === req.params.id) {
+        if (req.user.id === req.params.id && req.user.role === 'superadmin') {
             next();
         } else {
             return res.status(403).json({
@@ -69,10 +94,11 @@ const verifyTokenAndSuperadminID = (req, res, next) => {
         }
     });
 };
-
 module.exports = {
     verifyToken,
-    verifyTokenUserIdAndSuperRole,
-    verifyTokenAdminIdAndSuperRole,
-    verifyTokenAndSuperadminID
+    verify_Token_Admin_Superadmin_Role,
+    verify_Token_Superadmin_Role,
+    verify_Token_UserId_Admin_Superadmin_Role,
+    verify_Token_AdminId_Superadmin_Role,
+    verify_Token_SuperadminId
 };

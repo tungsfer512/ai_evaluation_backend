@@ -57,7 +57,6 @@ const register = async (req, res) => {
         });
     }
 };
-
 const login = async (req, res) => {
     try {
         let reqUserData = req.body;
@@ -116,7 +115,6 @@ const login = async (req, res) => {
         });
     }
 };
-
 const isUsernameExisted = (username) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -139,7 +137,6 @@ const isUsernameExisted = (username) => {
         }
     });
 };
-
 const isEmailExisted = (email) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -162,7 +159,6 @@ const isEmailExisted = (email) => {
         }
     });
 };
-
 module.exports = {
     register,
     login

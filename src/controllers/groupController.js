@@ -4,10 +4,7 @@ const { Group } = require('../models/index');
 const addNewGroup = async (req, res) => {
     try {
         let newGroupData = req.body;
-        if (
-            !newGroupData.title ||
-            !newGroupData.description
-        ) {
+        if (!newGroupData.title || !newGroupData.description) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
@@ -27,9 +24,9 @@ const addNewGroup = async (req, res) => {
         return res.status(500).json({
             resCode: 500,
             resCode: err
-        })
+        });
     }
-}
+};
 // Read
 const getAllGroup = async (req, res) => {
     try {
@@ -53,7 +50,7 @@ const getAllGroup = async (req, res) => {
             resCode: err
         });
     }
-}
+};
 const getGroupById = async (req, res) => {
     try {
         let group = await Group.findOne({
@@ -79,15 +76,12 @@ const getGroupById = async (req, res) => {
             resCode: err
         });
     }
-}
+};
 // Update
 const updateGroup = async (req, res) => {
     try {
         let newGroupData = req.body;
-        if (
-            !newGroupData.title ||
-            !newGroupData.description
-        ) {
+        if (!newGroupData.title || !newGroupData.description) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
@@ -100,7 +94,7 @@ const updateGroup = async (req, res) => {
             },
             {
                 where: {
-                    id: newGroupData.id,
+                    id: newGroupData.id
                 },
                 raw: true
             }
@@ -115,9 +109,9 @@ const updateGroup = async (req, res) => {
         return res.status(500).json({
             resCode: 500,
             resCode: err
-        })
+        });
     }
-}
+};
 // Delete
 const deleteGroupById = async (req, res) => {
     try {
@@ -135,7 +129,7 @@ const deleteGroupById = async (req, res) => {
         }
         await Group.destroy({
             where: {
-                id: req.params.id,
+                id: req.params.id
             }
         });
         return res.status(200).json({
@@ -149,12 +143,11 @@ const deleteGroupById = async (req, res) => {
             resCode: err
         });
     }
-}
-
+};
 module.exports = {
     addNewGroup,
     getAllGroup,
     getGroupById,
     updateGroup,
     deleteGroupById
-}
+};
