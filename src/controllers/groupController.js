@@ -30,7 +30,11 @@ const addNewGroup = async (req, res) => {
 const addNewSubGroup = async (req, res) => {
     try {
         let newSubGroupData = req.body;
-        if (!newSubGroupData.title || !newSubGroupData.description || !newSubGroupData.groupId) {
+        if (
+            !newSubGroupData.title ||
+            !newSubGroupData.description ||
+            !newSubGroupData.groupId
+        ) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
@@ -59,7 +63,7 @@ const deleteGroupById = async (req, res) => {
     try {
         let group = await Group.findOne({
             where: {
-                id: req.params.id
+                id: req.params.groupId
             },
             raw: true
         });
@@ -71,8 +75,9 @@ const deleteGroupById = async (req, res) => {
         }
         await Group.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.groupId
+            },
+            raw: true
         });
         return res.status(200).json({
             resCode: 200,
@@ -90,8 +95,8 @@ const deleteSubGroupById = async (req, res) => {
     try {
         let subGroup = await SubGroup.findOne({
             where: {
-                groupId: req.params.id,
-                id: req.params.subid
+                groupId: req.params.groupId,
+                id: req.params.subGroupId
             },
             raw: true
         });
@@ -103,9 +108,10 @@ const deleteSubGroupById = async (req, res) => {
         }
         await SubGroup.destroy({
             where: {
-                groupId: req.params.id,
-                id: req.params.subid
-            }
+                groupId: req.params.groupId,
+                id: req.params.subGroupId
+            },
+            raw: true
         });
         return res.status(200).json({
             resCode: 200,
@@ -124,7 +130,7 @@ const updateGroupById = async (req, res) => {
     try {
         let group = await Group.findOne({
             where: {
-                id: req.params.id
+                id: req.params.groupId
             },
             raw: true
         });
@@ -148,7 +154,7 @@ const updateGroupById = async (req, res) => {
             },
             {
                 where: {
-                    id: newGroupData.id
+                    id: newGroupData.groupId
                 },
                 raw: true
             }
@@ -170,8 +176,8 @@ const updateSubGroupById = async (req, res) => {
     try {
         let subGroup = await SubGroup.findOne({
             where: {
-                groupId: req.params.id,
-                id: req.params.subid
+                groupId: req.params.groupId,
+                id: req.params.subGroupId
             },
             raw: true
         });
@@ -182,7 +188,11 @@ const updateSubGroupById = async (req, res) => {
             });
         }
         let newSubGroupData = req.body;
-        if (!newSubGroupData.title || !newSubGroupData.description || !newSubGroupData.groupId) {
+        if (
+            !newSubGroupData.title ||
+            !newSubGroupData.description ||
+            !newSubGroupData.groupId
+        ) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
@@ -195,8 +205,8 @@ const updateSubGroupById = async (req, res) => {
             },
             {
                 where: {
-                    groupId: req.params.id,
-                    id: newSubGroupData.subid
+                    groupId: req.params.groupId,
+                    id: newSubGroupData.id
                 },
                 raw: true
             }
@@ -219,8 +229,8 @@ const getSubGroupById = async (req, res) => {
     try {
         let subGroup = await SubGroup.findOne({
             where: {
-                groupId: req.params.id,
-                id: req.params.subid
+                groupId: req.params.groupId,
+                id: req.params.subGroupId
             },
             raw: true
         });
@@ -246,7 +256,7 @@ const getAllSubGroupByGroupId = async (req, res) => {
     try {
         let group = await Group.findAll({
             where: {
-                groupId: req.params.id
+                groupId: req.params.groupId
             },
             raw: true
         });
@@ -272,7 +282,7 @@ const getGroupById = async (req, res) => {
     try {
         let group = await Group.findOne({
             where: {
-                id: req.params.id
+                id: req.params.groupId
             },
             raw: true
         });
@@ -328,5 +338,5 @@ module.exports = {
     getSubGroupById,
     getAllSubGroupByGroupId,
     getGroupById,
-    getAllGroup,
+    getAllGroup
 };

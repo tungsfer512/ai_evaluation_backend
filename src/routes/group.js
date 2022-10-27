@@ -11,42 +11,42 @@ groupRouter.post(
     GroupController.addNewGroup
 );
 groupRouter.delete(
-    '/delete/:id',
+    '/delete/:groupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.deleteGroupById
 );
 groupRouter.put(
-    '/edit/:id',
+    '/edit/:groupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.updateGroupById
 );
 groupRouter.post(
-    '/:id/subgroups/add',
+    '/:groupId/subgroups/add',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.addNewSubGroup
-)
+);
 groupRouter.delete(
-    '/:id/subgroups/delete/:subid',
+    '/:groupId/subgroups/delete/:subGroupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.deleteSubGroupById
-)
+);
 groupRouter.put(
-    '/:id/subgroups/edit/:subid',
+    '/:groupId/subgroups/edit/:subGroupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
-    GroupController.updateSubGroupByIdById
-)
+    GroupController.updateSubGroupById
+);
 groupRouter.get(
-    '/:id/subgroups/:subid',
+    '/:groupId/subgroups/:subGroupId',
     MiddlewareController.verify_Token,
     GroupController.getSubGroupById
-)
+);
 groupRouter.get(
-    '/:id/subgroups',
+    '/:groupId/subgroups',
     MiddlewareController.verify_Token,
     GroupController.getAllSubGroupByGroupId
-)
+);
 groupRouter.get(
-    '/:id',
+    '/:groupId',
     MiddlewareController.verify_Token,
     GroupController.getGroupById
 );

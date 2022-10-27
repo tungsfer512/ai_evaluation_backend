@@ -18,49 +18,49 @@ userRouter.post(
 );
 // Update
 userRouter.put(
-    '/users/edit/:id',
+    '/users/edit/:userId',
     MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
     UserController.updateUserById
 );
 userRouter.put(
-    '/admins/edit/:id',
+    '/admins/edit/:userId',
     MiddlewareController.verify_Token_AdminId_Superadmin_Role,
     UserController.updateUserById
 );
 userRouter.put(
-    '/superadmins/edit/:id',
+    '/superadmins/edit/:userId',
     MiddlewareController.verify_Token_SuperadminId,
     UserController.updateUserById
 );
 // Delete
 userRouter.delete(
-    '/users/delete/:id',
+    '/users/delete/:userId',
     MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
     UserController.deleteUserById
 );
 userRouter.delete(
-    '/admins/delete/:id',
+    '/admins/delete/:userId',
     MiddlewareController.verify_Token_AdminId_Superadmin_Role,
     UserController.deleteUserById
 );
 userRouter.delete(
-    '/superadmins/delete/:id',
+    '/superadmins/delete/:userId',
     MiddlewareController.verify_Token_SuperadminId,
     UserController.deleteUserById
 );
 // Read
 userRouter.get(
-    '/users/:id',
+    '/users/:userId',
     MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
     UserController.getUserById
 );
 userRouter.get(
-    '/admins/:id',
+    '/admins/:userId',
     MiddlewareController.verify_Token_AdminId_Superadmin_Role,
     UserController.getUserById
 );
 userRouter.get(
-    '/superadmins/:id',
+    '/superadmins/:userId',
     MiddlewareController.verify_Token_SuperadminId,
     UserController.getUserById
 );

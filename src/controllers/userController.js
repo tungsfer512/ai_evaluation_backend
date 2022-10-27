@@ -65,7 +65,7 @@ const deleteUserById = async (req, res) => {
                 exclude: ['password']
             },
             where: {
-                id: req.params.id
+                id: req.params.userId
             },
             raw: true
         });
@@ -77,9 +77,10 @@ const deleteUserById = async (req, res) => {
         }
         await User.destroy({
             where: {
-                id: req.params.id,
+                id: req.params.userId,
                 role: 'user'
-            }
+            },
+            raw: true
         });
         return res.status(200).json({
             resCode: 200,
@@ -101,7 +102,7 @@ const updateUserById = async (req, res) => {
                 exclude: ['password']
             },
             where: {
-                id: req.params.id
+                id: req.params.userId
             },
             raw: true
         });
@@ -141,7 +142,7 @@ const updateUserById = async (req, res) => {
             },
             {
                 where: {
-                    id: req.params.id
+                    id: req.params.userId
                 },
                 raw: true
             }
@@ -169,7 +170,8 @@ const getAllUser = async (req, res) => {
             },
             where: {
                 role: 'user'
-            }
+            },
+            raw: true
         });
         if (!users) {
             return res.status(404).json({
@@ -196,8 +198,9 @@ const getUserById = async (req, res) => {
                 exclude: ['password']
             },
             where: {
-                id: req.params.id
-            }
+                id: req.params.userId
+            },
+            raw: true
         });
         if (!users) {
             return res.status(404).json({
@@ -225,7 +228,8 @@ const getAllAdmin = async (req, res) => {
             },
             where: {
                 role: 'admin'
-            }
+            },
+            raw: true
         });
         if (!users) {
             return res.status(404).json({
@@ -296,5 +300,5 @@ module.exports = {
     updateUserById,
     getAllUser,
     getAllAdmin,
-    getUserById,
+    getUserById
 };
