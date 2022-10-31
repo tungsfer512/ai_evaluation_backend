@@ -1,13 +1,57 @@
 const express = require('express');
 
 const SubmissionController = require('../controllers/submissionController');
+const MiddlewareController = require('../controllers/middlewareController');
 
-let problemRouter = express.Router();
+let submissionRouter = express.Router();
 
-problemRouter.post('/add', SubmissionController.addNewSubmission);
-problemRouter.delete('/delete/:id', SubmissionController.deleteSubmissionById);
-problemRouter.put('/edit/:id', SubmissionController.updateSubmission);
-problemRouter.get('/:id', SubmissionController.getSubmissionById);
-problemRouter.get('/', SubmissionController.getAllSubmission);
+// Create
+submissionRouter.post(
+    '/add',
+    MiddlewareController.verify_Token,
+    SubmissionController.addNewSubmission
+);
+// Delete
+submissionRouter.delete(
+    '/delete/:submissionId',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    SubmissionController.deleteSubmissionById
+);
+// Update
+submissionRouter.put(
+    '/edit/:submissionId',
+    SubmissionController.updateSubmissionById
+);
+// Read
+submissionRouter.get(
+    '/groups/:groupId',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmissionByGroupId
+);
+submissionRouter.get(
+    '/groups/:groupId/subgroups/:subGroupId',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmissionBySubGroupId
+);
+submissionRouter.get(
+    '/problems/:problemId',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmissionByProblemId
+);
+submissionRouter.get(
+    '/users/:userId',
+    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmissionByUserId
+);
+submissionRouter.get(
+    '/:submissionId',
+    MiddlewareController.verify_Token,
+    SubmissionController.getSubmissionById
+);
+submissionRouter.get(
+    '/',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmission
+);
 
-module.exports = problemRouter;
+module.exports = submissionRouter;

@@ -26,6 +26,7 @@ const createSubmission = (sequelize, DataTypes) => {
             },
             status: {
                 type: DataTypes.STRING,
+                defaultValue: 'pending',
                 allowNull: false
             },
             description: {
