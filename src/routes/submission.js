@@ -20,6 +20,7 @@ submissionRouter.delete(
 // Update
 submissionRouter.put(
     '/edit/:submissionId',
+    MiddlewareController.verify_Token,
     SubmissionController.updateSubmissionById
 );
 // Read
