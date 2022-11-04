@@ -25,14 +25,14 @@ submissionRouter.put(
 );
 // Read
 submissionRouter.get(
+    '/groups/subgroups/:subGroupId',
+    MiddlewareController.verify_Token_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmissionBySubGroupId
+);
+submissionRouter.get(
     '/groups/:groupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     SubmissionController.getAllSubmissionByGroupId
-);
-submissionRouter.get(
-    '/groups/:groupId/subgroups/:subGroupId',
-    MiddlewareController.verify_Token_Admin_Superadmin_Role,
-    SubmissionController.getAllSubmissionBySubGroupId
 );
 submissionRouter.get(
     '/problems/:problemId',

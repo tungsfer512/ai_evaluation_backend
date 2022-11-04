@@ -172,7 +172,6 @@ const getAllProblemBySubGroupId = async (req, res) => {
     try {
         let problems = await Problem.findall({
             where: {
-                groupId: req.params.groupId,
                 subGroupId: req.params.subGroupId
             },
             raw: true

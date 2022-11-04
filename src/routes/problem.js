@@ -25,14 +25,14 @@ problemRouter.put(
 );
 // Read
 problemRouter.get(
+    '/groups/subgroups/:subGroupId',
+    MiddlewareController.verify_Token,
+    ProblemController.getAllProblemBySubGroupId
+);
+problemRouter.get(
     '/groups/:groupId',
     MiddlewareController.verify_Token,
     ProblemController.getAllProblemByGroupId
-);
-problemRouter.get(
-    '/groups/:groupId/subgroups/:subGroupId',
-    MiddlewareController.verify_Token,
-    ProblemController.getAllProblemBySubGroupId
 );
 problemRouter.get(
     '/:problemId',

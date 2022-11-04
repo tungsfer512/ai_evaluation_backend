@@ -97,7 +97,7 @@ const login = async (req, res) => {
             },
             process.env.JWT_ACCESS_KEY,
             {
-                expiresIn: '30m'
+                expiresIn: '300m'
             }
         );
         return res.status(200).json({

@@ -4,8 +4,11 @@ const dataRouter = require('./data');
 const groupRouter = require('./group');
 const submissionRouter = require('./submission');
 const authRouter = require('./auth');
+const hubRouter = require('./hub');
 
 const initWebRouter = (app) => {
+    // Communicate with Jupyter Hub
+    app.use('/api/v1/hub', hubRouter);
     // Problems
     app.use('/api/v1/problems', problemRouter);
     // Datasets

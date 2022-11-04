@@ -5,14 +5,7 @@ const ProblemController = require('./problemController');
 const addNewSubmission = async (req, res) => {
     try {
         let newSubmissionData = req.body;
-        let newSubmission = new Submission({
-            accuracyModel: newSubmissionData.accuracyModel,
-            accuracyTest: newSubmissionData.accuracyTest,
-            excutionTime: newSubmissionData.excutionTime,
-            excutionMemories: newSubmissionData.excutionMemories,
-            status: newSubmissionData.status,
-            description: newSubmissionData.description
-        });
+        let newSubmission = new Submission(newSubmissionData);
         let resData = newSubmission.dataValues;
         await newSubmission.save();
         return res.status(200).json({
@@ -161,7 +154,6 @@ const getAllSubmissionBySubGroupId = async (req, res) => {
     try {
         let problems = await Problem.findall({
             where: {
-                groupId: req.params.groupId,
                 subGroupId: res.params.subGroupId
             },
             raw: true

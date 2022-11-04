@@ -21,29 +21,29 @@ groupRouter.put(
     GroupController.updateGroupById
 );
 groupRouter.post(
-    '/:groupId/subgroups/add',
+    '/subgroups/add',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.addNewSubGroup
 );
 groupRouter.delete(
-    '/:groupId/subgroups/delete/:subGroupId',
+    '/subgroups/delete/:subGroupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.deleteSubGroupById
 );
 groupRouter.put(
-    '/:groupId/subgroups/edit/:subGroupId',
+    '/subgroups/edit/:subGroupId',
     MiddlewareController.verify_Token_Admin_Superadmin_Role,
     GroupController.updateSubGroupById
 );
 groupRouter.get(
-    '/:groupId/subgroups/:subGroupId',
+    '/subgroups/:subGroupId',
     MiddlewareController.verify_Token,
     GroupController.getSubGroupById
 );
 groupRouter.get(
-    '/:groupId/subgroups',
+    '/subgroups',
     MiddlewareController.verify_Token,
-    GroupController.getAllSubGroupByGroupId
+    GroupController.getAllSubGroup
 );
 groupRouter.get(
     '/:groupId',

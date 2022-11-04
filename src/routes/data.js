@@ -25,14 +25,14 @@ dataRouter.put(
 );
 // Read
 dataRouter.get(
+    '/groups/subgroups/:subGroupId',
+    MiddlewareController.verify_Token,
+    DataController.getAllDatasetBySubGroupId
+);
+dataRouter.get(
     '/groups/:groupId',
     MiddlewareController.verify_Token,
     DataController.getAllDatasetByGroupId
-);
-dataRouter.get(
-    '/groups/:groupId/subgroups/:subGroupId',
-    MiddlewareController.verify_Token,
-    DataController.getAllDatasetBySubGroupId
 );
 dataRouter.get(
     '/problems/:problemId',

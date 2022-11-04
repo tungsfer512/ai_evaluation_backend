@@ -8,7 +8,6 @@ const addNewDataset = async (req, res) => {
         if (
             !newDatasetData.title ||
             !newDatasetData.path ||
-            !newDatasetData.description ||
             !newDatasetData.problemId
         ) {
             return res.status(400).json({
@@ -88,7 +87,6 @@ const updateDatasetById = async (req, res) => {
         if (
             !newDatasetData.title ||
             !newDatasetData.path ||
-            !newDatasetData.description ||
             !newDatasetData.problemId
         ) {
             return res.status(400).json({
@@ -179,7 +177,6 @@ const getAllDatasetBySubGroupId = async (req, res) => {
     try {
         let problems = await Problem.findall({
             where: {
-                groupId: req.params.groupId,
                 subGroupId: res.params.subGroupId
             },
             raw: true
