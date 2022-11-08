@@ -11,10 +11,4 @@ hubRouter.get(
     HubController.findAvailableHub
 );
 
-hubRouter.get(
-    '/token',
-    MiddlewareController.verify_Token,
-    HubController.getNewHubInfo
-);
-
 module.exports = hubRouter;

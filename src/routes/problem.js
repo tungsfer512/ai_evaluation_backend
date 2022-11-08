@@ -5,6 +5,11 @@ const MiddlewareController = require('../controllers/middlewareController');
 
 let problemRouter = express.Router();
 
+problemRouter.get(
+    '/',
+    MiddlewareController.verify_Token,
+    ProblemController.getAllProblem
+);
 // Create
 problemRouter.post(
     '/add',
@@ -38,11 +43,6 @@ problemRouter.get(
     '/:problemId',
     MiddlewareController.verify_Token,
     ProblemController.getProblemById
-);
-problemRouter.get(
-    '/',
-    MiddlewareController.verify_Token,
-    ProblemController.getAllProblem
 );
 
 module.exports = problemRouter;

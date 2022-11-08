@@ -104,7 +104,7 @@ Run command **```npm install```** to install all libraries used in this project
 | **User+** | **```/api/v1/problems/groups/subgroups/:subGroupId```** |  | Get all problems by subGroup id |
 | **User+** | **```/api/v1/problems/groups/:groupId```** | None | Get all problems by group id |
 | **User+** | **```/api/v1/problems/:problemId```** | None | Get problem by id |
-| **User+** | **```/api/v1/problems/groups```** | None | Get all problems |
+| **User+** | **```/api/v1/problems```** | None | Get all problems |
 
 ### 6.4, Dataset
 

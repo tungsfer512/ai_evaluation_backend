@@ -18,7 +18,9 @@ const register = async (req, res) => {
             });
         }
         let isEmailExist = await isEmailExisted(newUserData.email);
+        console.log(123);
         let isUsernameExist = await isUsernameExisted(newUserData.username);
+        console.log(234);
         if (isUsernameExist) {
             return res.status(400).json({
                 resCode: 400,
@@ -43,7 +45,9 @@ const register = async (req, res) => {
             lastName: newUserData.lastName
         });
         let resData = newUser.dataValues;
+        console.log(456);
         await newUser.save();
+        console.log(789);
         delete resData.password;
         return res.status(200).json({
             resCode: 200,

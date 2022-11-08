@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect --exec babel-node src/server.js",
     "format": "prettier --single-quote --trailing-comma none --tab-width 4 --write \"src/**/*.{js,json}\"",
-    "dev": "npm run format && npm start"
+    "dev": "npm run format && npm start", 
+    "setupdb": "node src/config/setupdb.js"
   },
   "lint-staged": {
     "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma none --tab-width 4 --write"

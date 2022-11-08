@@ -123,6 +123,7 @@ const updateProblemById = async (req, res) => {
 // Read
 const getAllProblem = async (req, res) => {
     try {
+        console.log(123);
         let problems = await Problem.findall({ raw: true });
         if (!problems) {
             return res.status(404).json({
@@ -170,6 +171,7 @@ const getAllProblemByGroupId = async (req, res) => {
 };
 const getAllProblemBySubGroupId = async (req, res) => {
     try {
+        
         let problems = await Problem.findall({
             where: {
                 subGroupId: req.params.subGroupId
