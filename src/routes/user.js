@@ -43,11 +43,6 @@ userRouter.delete(
     MiddlewareController.verify_Token_AdminId_Superadmin_Role,
     UserController.deleteUserById
 );
-userRouter.delete(
-    '/superadmins/delete/:userId',
-    MiddlewareController.verify_Token_SuperadminId,
-    UserController.deleteUserById
-);
 // Read
 userRouter.get(
     '/users/:userId',

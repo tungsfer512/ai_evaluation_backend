@@ -171,7 +171,6 @@ const getAllProblemByGroupId = async (req, res) => {
 };
 const getAllProblemBySubGroupId = async (req, res) => {
     try {
-        
         let problems = await Problem.findall({
             where: {
                 subGroupId: req.params.subGroupId

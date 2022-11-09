@@ -134,14 +134,14 @@ const updateGroupById = async (req, res) => {
                 resMessage: 'Missing input value(s).'
             });
         }
-        await newGroup.update(
+        await Group.update(
             {
                 title: newGroupData.title,
                 description: newGroupData.description
             },
             {
                 where: {
-                    id: newGroupData.groupId
+                    id: group.groupId
                 },
                 raw: true
             }

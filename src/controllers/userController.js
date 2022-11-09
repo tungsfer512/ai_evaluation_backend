@@ -10,7 +10,8 @@ const addNewUser = async (req, res) => {
             !newUserData.password ||
             !newUserData.email ||
             !newUserData.firstName ||
-            !newUserData.lastName
+            !newUserData.lastName ||
+            !newUserData.role
         ) {
             return res.status(400).json({
                 resCode: 400,
@@ -57,43 +58,6 @@ const addNewUser = async (req, res) => {
         });
     }
 };
-// Delete
-const deleteUserById = async (req, res) => {
-    try {
-        let user = await User.findOne({
-            attributes: {
-                exclude: ['password']
-            },
-            where: {
-                id: req.params.userId
-            },
-            raw: true
-        });
-        if (!user) {
-            return res.status(404).json({
-                resCode: 404,
-                resMessage: 'User not found.'
-            });
-        }
-        await User.destroy({
-            where: {
-                id: req.params.userId,
-                role: 'user'
-            },
-            raw: true
-        });
-        return res.status(200).json({
-            resCode: 200,
-            resMessage: 'OK',
-            data: user
-        });
-    } catch (err) {
-        res.status(500).json({
-            resCode: 500,
-            resMessage: err
-        });
-    }
-};
 // Update
 const updateUserById = async (req, res) => {
     try {
@@ -115,7 +79,6 @@ const updateUserById = async (req, res) => {
         let newUserData = req.body;
         if (
             !newUserData.password ||
-            !newUserData.email ||
             !newUserData.firstName ||
             !newUserData.lastName
         ) {
@@ -124,18 +87,10 @@ const updateUserById = async (req, res) => {
                 resMessage: 'Missing input value(s).'
             });
         }
-        let isEmailExist = await isEmailExisted(newUserData.email);
-        if (isEmailExist && newUserData.email !== user.email) {
-            return res.status(400).json({
-                resCode: 400,
-                resMessage: 'Email already used, please choose another email.'
-            });
-        }
         let salt = await bcrypt.genSalt(10);
         let encodedPassword = await bcrypt.hash(newUserData.password, salt);
         await User.update(
             {
-                email: newUserData.email,
                 password: encodedPassword,
                 firstName: newUserData.firstName,
                 lastName: newUserData.lastName
@@ -156,6 +111,42 @@ const updateUserById = async (req, res) => {
         });
     } catch (err) {
         return res.status(500).json({
+            resCode: 500,
+            resMessage: err
+        });
+    }
+};
+// Delete
+const deleteUserById = async (req, res) => {
+    try {
+        let user = await User.findOne({
+            attributes: {
+                exclude: ['password']
+            },
+            where: {
+                id: req.params.userId
+            },
+            raw: true
+        });
+        if (!user) {
+            return res.status(404).json({
+                resCode: 404,
+                resMessage: 'User not found.'
+            });
+        }
+        await User.destroy({
+            where: {
+                id: req.params.userId
+            },
+            raw: true
+        });
+        return res.status(200).json({
+            resCode: 200,
+            resMessage: 'OK',
+            data: user
+        });
+    } catch (err) {
+        res.status(500).json({
             resCode: 500,
             resMessage: err
         });

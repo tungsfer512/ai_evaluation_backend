@@ -16,7 +16,7 @@ const findAvailableHub = async (req, res) => {
                 const postResponse = await axios.post(
                     `https://hub.zcode.vn/hub/api/users/${server.name}/server`
                 );
-                if(postResponse.status === 202) {
+                if (postResponse.status === 202) {
                     const patchResponse = await axios.patch(
                         `https://hub.zcode.vn/hub/api/users/${server.name}`,
                         {
