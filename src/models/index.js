@@ -1,61 +1,249 @@
 const { DataTypes, Sequelize } = require('sequelize');
 
-const createUser = require('./user');
-const createDataset = require('./dataset');
-const createGroup = require('./group');
-const createProblem = require('./problem');
-const createSubGroup = require('./subGroup');
-const createSubmission = require('./submission');
-
 const sequelize = new Sequelize('ai_evaluation_dev', 'root', 'tung', {
     host: 'localhost',
     dialect: 'mysql'
 });
 
-const User = createUser(sequelize, DataTypes);
-const Problem = createProblem(sequelize, DataTypes);
-const Submission = createSubmission(sequelize, DataTypes);
-const Group = createGroup(sequelize, DataTypes);
-const SubGroup = createSubGroup(sequelize, DataTypes);
-const Dataset = createDataset(sequelize, DataTypes);
+const User = sequelize.define(
+    'User',
+    {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
+        },
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        firstName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        role: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'user'
+        }
+    },
+    {
+        tableName: 'User',
+        timestamps: true
+    }
+);
+
+const Group = sequelize.define(
+    'Group',
+    {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
+    },
+    {
+        tableName: 'Group',
+        timestamps: true
+    }
+);
+
+const SubGroup = sequelize.define(
+    'SubGroup',
+    {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }, 
+        groupId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'Group',
+                key: 'id'
+            },
+        },
+    },
+    {
+        tableName: 'SubGroup',
+        timestamps: true
+    }
+);
+
+const Problem = sequelize.define(
+    'Problem',
+    {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        inputDescription: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        outputDescription: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }, 
+        groupId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'Group',
+                key: 'id'
+            },
+        },
+        subGroupId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'SubGroup',
+                key: 'id'
+            },
+        },
+    },
+    {
+        tableName: 'Problem',
+        timestamps: true
+    }
+);
+
+const Dataset = sequelize.define(
+    'Dataset',
+    {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        path: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }, 
+        problemId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'Problem',
+                key: 'id'
+            },
+        },
+    },
+    {
+        tableName: 'Dataset',
+        timestamps: true
+    }
+);
+
+const Submission = sequelize.define(
+    'Submission',
+    {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
+        },
+        accuracyModel: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
+        },
+        accuracyTest: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
+        },
+        excutionTime: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
+        },
+        excutionMemories: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
+        },
+        status: {
+            type: DataTypes.STRING,
+            defaultValue: 'pending',
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }, 
+        userId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'User',
+                key: 'id'
+            },
+        },
+        problemId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'Problem',
+                key: 'id'
+            },
+        }
+    },
+    {
+        tableName: 'Submission',
+        timestamps: true
+    }
+);
 
 const createDB = async () => {
-    User.hasMany(Submission, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    });
-    Submission.belongsTo(User);
-
-    Problem.hasMany(Submission, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    });
-    Submission.belongsTo(Problem);
-
-    Problem.hasMany(Dataset, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    });
-    Dataset.belongsTo(Problem);
-
-    Group.hasMany(SubGroup, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    });
-    SubGroup.belongsTo(Group);
-
-    Group.hasMany(Problem, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    });
-    Problem.belongsTo(Group);
-
-    SubGroup.hasMany(Problem, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    });
-    Problem.belongsTo(SubGroup);
-
     await sequelize.sync({ force: true });
     console.log('All models were synchronized successfully.');
 };
@@ -63,9 +251,9 @@ const createDB = async () => {
 module.exports = {
     createDB,
     User,
-    Problem,
-    Submission,
     Group,
     SubGroup,
-    Dataset
+    Problem,
+    Dataset,
+    Submission,
 };

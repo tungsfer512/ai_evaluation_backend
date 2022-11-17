@@ -20,21 +20,38 @@ const addNewGroup = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
 const addNewSubGroup = async (req, res) => {
     try {
         let newSubGroupData = req.body;
-        if (!newSubGroupData.title || !newSubGroup.groupId) {
+        if (!newSubGroupData.title || !newSubGroupData.groupId) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
             });
         }
-        let newSubGroup = new SubGroup(newSubGroupData);
-        await newSubGroup.save();
+        // let newSubGroup = new SubGroup({
+        //     title: newSubGroupData.title, 
+        //     description: newSubGroupData.description, 
+        //     groupId: newSubGroupData.groupId
+        // });
+        let newSubGroup = await SubGroup.create({
+            title: newSubGroupData.title,
+            description: newSubGroupData.description,
+            groupId: newSubGroupData.groupId
+        });
+        await SubGroup.update(
+            {
+                GroupId: newSubGroupData.groupId
+            }, {
+            where: {
+                id: newSubGroup.id
+            }, raw: true
+        });
+        console.log(newSubGroup.groupId, newSubGroupData.groupId);
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
@@ -43,10 +60,11 @@ const addNewSubGroup = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
+
 // Delete
 const deleteGroupById = async (req, res) => {
     try {
@@ -76,7 +94,7 @@ const deleteGroupById = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -108,7 +126,7 @@ const deleteSubGroupById = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -155,7 +173,7 @@ const updateGroupById = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -202,7 +220,7 @@ const updateSubGroupById = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -229,7 +247,7 @@ const getSubGroupById = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -250,7 +268,7 @@ const getAllSubGroup = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -283,7 +301,7 @@ const getGroupById = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
@@ -315,7 +333,7 @@ const getAllGroup = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resCode: err
+            resMessage: err
         });
     }
 };
