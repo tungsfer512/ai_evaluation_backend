@@ -91,17 +91,16 @@ Run command **```npm install```** to install all libraries used in this project
 | Authorization | URL | Body | Description |
 | ----------- | ----------- | ----------- | ----------- |
 | **Superadmin** | **```/api/v1/superadmins/:userId```** | None | Get superadmin by id |
-| **Superadmin** | **```/api/v1/superadmins/delete/:userId```** | None | Delete superadmin by id |
 | **Superadmin** | **```/api/v1/superadmins/edit/:userId```** | **```password```: *string*** <br/> **```email```: *string*** <br/> **```firstName```: *string*** <br/> **```lastName```: *string*** | Update superadmin by id |
 
 ### 6.3, Problem
 
 | Authorization | URL | Body | Description |
 | ----------- | ----------- | ----------- | ----------- |
-| **Admin+** | **```/api/v1/problems/add```** | **```title```: *string*** <br/> **```description```: *string*** <br/> **```inputDescription```: *string*** <br/> **```outputDescription```: *string*** <br/> **```groupId```: *string*** <br/> **```subGroupId```: *string*** | Add new problem |
+| **Admin+** | **```/api/v1/problems/add```** | **```title```: *string*** <br/> **```description```: *string*** <br/> **```inputDescription```: *string*** <br/> **```outputDescription```: *string*** <br/> **```subGroupId```: *string*** | Add new problem |
 | **Admin+** | **```/api/v1/problems/delete/:problemId```** | None | Delete problem by id |
-| **Admin+** | **```/api/v1/problems/edit/:problemId```** | **```title```: *string*** <br/> **```description```: *string*** <br/> **```inputDescription```: *string*** <br/> **```outputDescription```: *string*** <br/> **```groupId```: *string*** <br/> **```subGroupId```: *string*** | Update problem by id |
-| **User+** | **```/api/v1/problems/groups/subgroups/:subGroupId```** |  | Get all problems by subGroup id |
+| **Admin+** | **```/api/v1/problems/edit/:problemId```** | **```title```: *string*** <br/> **```description```: *string*** <br/> **```inputDescription```: *string*** <br/> **```outputDescription```: *string*** <br/> **```subGroupId```: *string*** | Update problem by id |
+| **User+** | **```/api/v1/problems/groups/subgroups/:subGroupId```** | None | Get all problems by subGroup id |
 | **User+** | **```/api/v1/problems/groups/:groupId```** | None | Get all problems by group id |
 | **User+** | **```/api/v1/problems/:problemId```** | None | Get problem by id |
 | **User+** | **```/api/v1/problems```** | None | Get all problems |
@@ -138,9 +137,9 @@ Run command **```npm install```** to install all libraries used in this project
 
 | Authorization | URL | Body | Description |
 | ----------- | ----------- | ----------- | ----------- |
-| **User+** | **```/api/v1/submissions/add```** | ```accuracyModel```: *double* <br/> ```accuracyTest```: *double* <br/> ```excutionTime```: *double* <br/> ```excutionMemories```: *double* <br/> ```status```: *string* <br/> ```description```: *string* | Add new submission |
+| **User+** | **```/api/v1/submissions/add```** | ```accuracyModel```: *double* <br/> ```accuracyTest```: *double* <br/> ```excutionTime```: *double* <br/> ```excutionMemories```: *double* <br/> ```status```: *string* <br/> ```description```: *string* <br/> **```userId```: *string*** <br/> **```problemId```: *string*** | Add new submission |
 | **Admin+** | **```/api/v1/submissions/delete/:submissionId```** | None | Delete submission by id |
-| **User+** | **```/api/v1/submissions/edit/:submissionId```** | ```accuracyModel```: *double* <br/> ```accuracyTest```: *double* <br/> ```excutionTime```: *double* <br/> ```excutionMemories```: *double* <br/> ```status```: *string* <br/> ```description```: *string* | Update submission by id |
+| **User+** | **```/api/v1/submissions/edit/:submissionId```** | ```accuracyModel```: *double* <br/> ```accuracyTest```: *double* <br/> ```excutionTime```: *double* <br/> ```excutionMemories```: *double* <br/> ```status```: *string* <br/> ```description```: *string* <br/> **```userId```: *string*** <br/> **```problemId```: *string*** | Update submission by id |
 | **Admin+** | **```/api/v1/submissions/groups/subgroups/:subGroupId```** | None | Get all submissions by subGroup id |
 | **Admin+** | **```/api/v1/submissions/groups/:groupId```** | None | Get all submissions by group id |
 | **Admin+** | **```/api/v1/submissions/problems/:problemId```** | None | Get all submissions by problem id |
