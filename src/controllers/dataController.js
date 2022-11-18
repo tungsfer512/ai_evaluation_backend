@@ -21,6 +21,7 @@ const addNewDataset = async (req, res) => {
             description: newDatasetData.description,
             problemId: newDatasetData.problemId
         });
+        console.log(123);
         let resData = newDataset.dataValues;
         await newDataset.save();
         return res.status(200).json({
@@ -108,6 +109,11 @@ const updateDatasetById = async (req, res) => {
                 raw: true
             }
         );
+        return res.status(200).json({
+            resCode: 200,
+            resMessage: 'OK',
+            data: dataset
+        });
     } catch (err) {
         return res.status(500).json({
             resCode: 500,

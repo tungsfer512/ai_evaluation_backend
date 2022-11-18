@@ -35,7 +35,7 @@ const addNewUser = async (req, res) => {
             email: newUserData.email,
             firstName: newUserData.firstName,
             lastName: newUserData.lastName,
-            role: newUserData.role,
+            role: newUserData.role
         });
         let resData = newUser.dataValues;
         await newUser.save();
@@ -85,7 +85,7 @@ const addNewAdmin = async (req, res) => {
             email: newUserData.email,
             firstName: newUserData.firstName,
             lastName: newUserData.lastName,
-            role: newUserData.role,
+            role: newUserData.role
         });
         let resData = newUser.dataValues;
         await newUser.save();
@@ -150,12 +150,10 @@ const updateUserById = async (req, res) => {
                 raw: true
             }
         );
-        let resData = newUserData;
-        delete resData.password;
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
-            data: resData
+            data: user
         });
     } catch (err) {
         return res.status(500).json({
@@ -211,12 +209,10 @@ const updateAdminById = async (req, res) => {
                 raw: true
             }
         );
-        let resData = newUserData;
-        delete resData.password;
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
-            data: resData
+            data: user
         });
     } catch (err) {
         return res.status(500).json({
@@ -272,12 +268,10 @@ const updatesuperadminById = async (req, res) => {
                 raw: true
             }
         );
-        let resData = newUserData;
-        delete resData.password;
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
-            data: resData
+            data: user
         });
     } catch (err) {
         return res.status(500).json({

@@ -29,11 +29,11 @@ problemRouter.get(
     MiddlewareController.verify_Token,
     ProblemController.getAllProblemBySubGroupId
 );
-problemRouter.get(
-    '/groups/:groupId',
-    MiddlewareController.verify_Token,
-    ProblemController.getAllProblemByGroupId
-);
+// problemRouter.get(
+//     '/groups/:groupId',
+//     MiddlewareController.verify_Token,
+//     ProblemController.getAllProblemByGroupId
+// );
 problemRouter.get(
     '/:problemId',
     MiddlewareController.verify_Token,

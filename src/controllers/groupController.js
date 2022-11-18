@@ -11,14 +11,15 @@ const addNewGroup = async (req, res) => {
             });
         }
         let newGroup = new Group({
-            title: newGroupData.title, 
+            title: newGroupData.title,
             description: newGroupData.description
         });
         await newGroup.save();
+        let resData = newGroup.dataValues;
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
-            data: newGroup
+            data: resData
         });
     } catch (err) {
         return res.status(500).json({
@@ -41,6 +42,7 @@ const addNewSubGroup = async (req, res) => {
             description: newSubGroupData.description,
             groupId: newSubGroupData.groupId
         });
+        newSubGroup.save();
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
@@ -148,16 +150,15 @@ const updateGroupById = async (req, res) => {
             },
             {
                 where: {
-                    id: group.groupId
+                    id: req.params.groupId
                 },
                 raw: true
             }
         );
-        let resData = newGroupData;
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
-            data: resData
+            data: group
         });
     } catch (err) {
         return res.status(500).json({
@@ -195,16 +196,15 @@ const updateSubGroupById = async (req, res) => {
             },
             {
                 where: {
-                    id: newSubGroupData.subGroupId
+                    id: req.params.subGroupId
                 },
                 raw: true
             }
         );
-        let resData = newSubGroupData;
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
-            data: resData
+            data: subGroup
         });
     } catch (err) {
         return res.status(500).json({

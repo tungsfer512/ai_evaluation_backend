@@ -5,14 +5,14 @@ const jwt = require('jsonwebtoken');
 const register = async (req, res) => {
     try {
         let newUserData = req.body;
-        newUserData.role = 'user'
+        newUserData.role = 'user';
         if (
             !newUserData.username ||
             !newUserData.password ||
             !newUserData.email ||
             !newUserData.firstName ||
-            !newUserData.lastName || 
-            !newUserData.role 
+            !newUserData.lastName ||
+            !newUserData.role
         ) {
             return res.status(400).json({
                 resCode: 400,
@@ -35,7 +35,7 @@ const register = async (req, res) => {
             email: newUserData.email,
             firstName: newUserData.firstName,
             lastName: newUserData.lastName,
-            role: newUserData.role,
+            role: newUserData.role
         });
         let resData = newUser.dataValues;
         await newUser.save();

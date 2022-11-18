@@ -5,6 +5,12 @@ const ProblemController = require('./problemController');
 const addNewSubmission = async (req, res) => {
     try {
         let newSubmissionData = req.body;
+        if (!newSubmissionData.userId || !newSubmissionData.problemId) {
+            return res.status(400).json({
+                resCode: 400,
+                resMessage: 'Missing input value(s).'
+            });
+        }
         let newSubmission = new Submission(newSubmissionData);
         let resData = newSubmission.dataValues;
         await newSubmission.save();
@@ -69,6 +75,12 @@ const updateSubmissionById = async (req, res) => {
             });
         }
         let newSubmissionData = req.body;
+        if (!newSubmissionData.userId || !newSubmissionData.problemId) {
+            return res.status(400).json({
+                resCode: 400,
+                resMessage: 'Missing input value(s).'
+            });
+        }
         await Submission.update(
             {
                 accuracyModel: newSubmissionData.accuracyModel,
@@ -85,6 +97,11 @@ const updateSubmissionById = async (req, res) => {
                 raw: true
             }
         );
+        return res.status(200).json({
+            resCode: 200,
+            resMessage: 'OK',
+            data: submission
+        });
     } catch (err) {
         return res.status(500).json({
             resCode: 500,

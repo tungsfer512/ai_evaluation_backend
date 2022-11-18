@@ -9,8 +9,7 @@ const addNewProblem = async (req, res) => {
             !newProblemData.description ||
             !newProblemData.inputDescription ||
             !newProblemData.outputDescription ||
-            !newProblemData.subGroupId ||
-            !newProblemData.groupId
+            !newProblemData.subGroupId
         ) {
             return res.status(400).json({
                 resCode: 400,
@@ -22,7 +21,6 @@ const addNewProblem = async (req, res) => {
             description: newProblemData.description,
             inputDescription: newProblemData.inputDescription,
             outputDescription: newProblemData.outputDescription,
-            groupId: newProblemData.groupId,
             subGroupId: newProblemData.subGroupId
         });
         let resData = newProblem.dataValues;
@@ -93,8 +91,7 @@ const updateProblemById = async (req, res) => {
             !newProblemData.description ||
             !newProblemData.inputDescription ||
             !newProblemData.outputDescription ||
-            !newProblemData.subGroupId ||
-            !newProblemData.groupId 
+            !newProblemData.subGroupId
         ) {
             return res.status(400).json({
                 resCode: 400,
@@ -107,7 +104,6 @@ const updateProblemById = async (req, res) => {
                 description: newProblemData.description,
                 inputDescription: newProblemData.inputDescription,
                 outputDescription: newProblemData.outputDescription,
-                groupId: newProblemData.groupId,
                 subGroupId: newProblemData.subGroupId
             },
             {
@@ -117,6 +113,11 @@ const updateProblemById = async (req, res) => {
                 raw: true
             }
         );
+        return res.status(200).json({
+            resCode: 200,
+            resMessage: 'OK',
+            data: problem
+        });
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
@@ -146,32 +147,32 @@ const getAllProblem = async (req, res) => {
         });
     }
 };
-const getAllProblemByGroupId = async (req, res) => {
-    try {
-        let problems = await Problem.findAll({
-            where: {
-                groupId: req.params.groupId
-            },
-            raw: true
-        });
-        if (!problems) {
-            return res.status(404).json({
-                resCode: 404,
-                resMessage: 'Problem not found.'
-            });
-        }
-        return res.status(200).json({
-            resCode: 200,
-            resMessage: 'OK',
-            data: problems
-        });
-    } catch (err) {
-        return res.status(500).json({
-            resCode: 500,
-            resMessage: err
-        });
-    }
-};
+// const getAllProblemByGroupId = async (req, res) => {
+//     try {
+//         let problems = await Problem.findAll({
+//             where: {
+//                 groupId: req.params.groupId
+//             },
+//             raw: true
+//         });
+//         if (!problems) {
+//             return res.status(404).json({
+//                 resCode: 404,
+//                 resMessage: 'Problem not found.'
+//             });
+//         }
+//         return res.status(200).json({
+//             resCode: 200,
+//             resMessage: 'OK',
+//             data: problems
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             resCode: 500,
+//             resMessage: err
+//         });
+//     }
+// };
 const getAllProblemBySubGroupId = async (req, res) => {
     try {
         let problems = await Problem.findAll({
@@ -230,7 +231,7 @@ module.exports = {
     deleteProblemById,
     updateProblemById,
     getAllProblem,
-    getAllProblemByGroupId,
+    // getAllProblemByGroupId,
     getAllProblemBySubGroupId,
     getProblemById
 };

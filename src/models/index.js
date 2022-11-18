@@ -36,7 +36,7 @@ const User = sequelize.define(
         },
         role: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         }
     },
     {
@@ -60,7 +60,7 @@ const Group = sequelize.define(
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
     },
     {
@@ -84,7 +84,7 @@ const SubGroup = sequelize.define(
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         groupId: {
             type: DataTypes.UUID,
@@ -126,14 +126,6 @@ const Problem = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false
         },
-        groupId: {
-            type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: 'Group',
-                key: 'id'
-            }
-        },
         subGroupId: {
             type: DataTypes.UUID,
             allowNull: false,
@@ -168,7 +160,7 @@ const Dataset = sequelize.define(
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         problemId: {
             type: DataTypes.UUID,
@@ -196,19 +188,19 @@ const Submission = sequelize.define(
         },
         accuracyModel: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         accuracyTest: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         excutionTime: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         excutionMemories: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
         status: {
             type: DataTypes.STRING,
@@ -217,7 +209,7 @@ const Submission = sequelize.define(
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         userId: {
             type: DataTypes.UUID,
