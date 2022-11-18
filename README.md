@@ -24,7 +24,7 @@ Run command **```npm install```** to install all libraries used in this project
 - Create a blank database
 - Update your database infomations in 2 files **```src/config/connectDB.js```**, **```src/models/index.js```**
 ![Connect to database!](./assets/connect_database.png "Connect to database")
-- Run the command **```node src/config/setupDB```** to create all tables in database
+- Run the command **```npm run setupdb```** to create all tables in database
 - Database E-R diagram:![ERD!](./assets/ERD.png "ERD")
 - Enities:
   - ```User``` : Infomations of user, has role: **```admin```**, **```user```**, **```superAdmin```**

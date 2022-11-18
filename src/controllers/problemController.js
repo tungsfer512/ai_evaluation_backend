@@ -8,7 +8,9 @@ const addNewProblem = async (req, res) => {
             !newProblemData.title ||
             !newProblemData.description ||
             !newProblemData.inputDescription ||
-            !newProblemData.outputDescription
+            !newProblemData.outputDescription ||
+            !newProblemData.subGroupId ||
+            !newProblemData.groupId
         ) {
             return res.status(400).json({
                 resCode: 400,
@@ -90,7 +92,9 @@ const updateProblemById = async (req, res) => {
             !newProblemData.title ||
             !newProblemData.description ||
             !newProblemData.inputDescription ||
-            !newProblemData.outputDescription
+            !newProblemData.outputDescription ||
+            !newProblemData.subGroupId ||
+            !newProblemData.groupId 
         ) {
             return res.status(400).json({
                 resCode: 400,
@@ -123,8 +127,7 @@ const updateProblemById = async (req, res) => {
 // Read
 const getAllProblem = async (req, res) => {
     try {
-        console.log(123);
-        let problems = await Problem.findall({ raw: true });
+        let problems = await Problem.findAll({ raw: true });
         if (!problems) {
             return res.status(404).json({
                 resCode: 404,
@@ -145,7 +148,7 @@ const getAllProblem = async (req, res) => {
 };
 const getAllProblemByGroupId = async (req, res) => {
     try {
-        let problems = await Problem.findall({
+        let problems = await Problem.findAll({
             where: {
                 groupId: req.params.groupId
             },
@@ -171,7 +174,7 @@ const getAllProblemByGroupId = async (req, res) => {
 };
 const getAllProblemBySubGroupId = async (req, res) => {
     try {
-        let problems = await Problem.findall({
+        let problems = await Problem.findAll({
             where: {
                 subGroupId: req.params.subGroupId
             },

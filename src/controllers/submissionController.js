@@ -95,7 +95,7 @@ const updateSubmissionById = async (req, res) => {
 // Read
 const getAllSubmission = async (req, res) => {
     try {
-        let submissions = await Submission.findall({ raw: true });
+        let submissions = await Submission.findAll({ raw: true });
         if (!submissions) {
             return res.status(404).json({
                 resCode: 404,
@@ -116,7 +116,7 @@ const getAllSubmission = async (req, res) => {
 };
 const getAllSubmissionByGroupId = async (req, res) => {
     try {
-        let problems = await Problem.findall({
+        let problems = await Problem.findAll({
             where: {
                 groupId: req.params.groupId
             },
@@ -152,7 +152,7 @@ const getAllSubmissionByGroupId = async (req, res) => {
 };
 const getAllSubmissionBySubGroupId = async (req, res) => {
     try {
-        let problems = await Problem.findall({
+        let problems = await Problem.findAll({
             where: {
                 subGroupId: res.params.subGroupId
             },

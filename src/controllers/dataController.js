@@ -118,7 +118,7 @@ const updateDatasetById = async (req, res) => {
 // Read
 const getAllDataset = async (req, res) => {
     try {
-        let datasets = await Dataset.findall({ raw: true });
+        let datasets = await Dataset.findAll({ raw: true });
         if (!datasets) {
             return res.status(404).json({
                 resCode: 404,
@@ -137,78 +137,78 @@ const getAllDataset = async (req, res) => {
         });
     }
 };
-const getAllDatasetByGroupId = async (req, res) => {
-    try {
-        let problems = await Problem.findall({
-            where: {
-                groupId: req.params.groupId
-            },
-            raw: true
-        });
-        if (!problems) {
-            return res.status(404).json({
-                resCode: 404,
-                resMessage: 'Group not found.'
-            });
-        }
-        let datasets = [];
-        problems.forEach(async (problem) => {
-            let data = await Dataset.findOne({
-                where: {
-                    problemId: problem.id
-                },
-                raw: true
-            });
-            datasets.push(data);
-        });
-        return res.status(200).json({
-            resCode: 200,
-            resMessage: 'OK',
-            data: datasets
-        });
-    } catch (err) {
-        return res.status(500).json({
-            resCode: 500,
-            resMessage: err
-        });
-    }
-};
-const getAllDatasetBySubGroupId = async (req, res) => {
-    try {
-        let problems = await Problem.findall({
-            where: {
-                subGroupId: res.params.subGroupId
-            },
-            raw: true
-        });
-        if (!problems) {
-            return res.status(404).json({
-                resCode: 404,
-                resMessage: 'SubGroup not found.'
-            });
-        }
-        let datasets = [];
-        problems.forEach(async (problem) => {
-            let data = await Dataset.findOne({
-                where: {
-                    problemId: problem.id
-                },
-                raw: true
-            });
-            datasets.push(data);
-        });
-        return res.status(200).json({
-            resCode: 200,
-            resMessage: 'OK',
-            data: datasets
-        });
-    } catch (err) {
-        return res.status(500).json({
-            resCode: 500,
-            resMessage: err
-        });
-    }
-};
+// const getAllDatasetByGroupId = async (req, res) => {
+//     try {
+//         let problems = await Problem.findAll({
+//             where: {
+//                 groupId: req.params.groupId
+//             },
+//             raw: true
+//         });
+//         if (!problems) {
+//             return res.status(404).json({
+//                 resCode: 404,
+//                 resMessage: 'Group not found.'
+//             });
+//         }
+//         let datasets = [];
+//         problems.forEach(async (problem) => {
+//             let data = await Dataset.findOne({
+//                 where: {
+//                     problemId: problem.id
+//                 },
+//                 raw: true
+//             });
+//             datasets.push(data);
+//         });
+//         return res.status(200).json({
+//             resCode: 200,
+//             resMessage: 'OK',
+//             data: datasets
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             resCode: 500,
+//             resMessage: err
+//         });
+//     }
+// };
+// const getAllDatasetBySubGroupId = async (req, res) => {
+//     try {
+//         let problems = await Problem.findall({
+//             where: {
+//                 subGroupId: res.params.subGroupId
+//             },
+//             raw: true
+//         });
+//         if (!problems) {
+//             return res.status(404).json({
+//                 resCode: 404,
+//                 resMessage: 'SubGroup not found.'
+//             });
+//         }
+//         let datasets = [];
+//         problems.forEach(async (problem) => {
+//             let data = await Dataset.findOne({
+//                 where: {
+//                     problemId: problem.id
+//                 },
+//                 raw: true
+//             });
+//             datasets.push(data);
+//         });
+//         return res.status(200).json({
+//             resCode: 200,
+//             resMessage: 'OK',
+//             data: datasets
+//         });
+//     } catch (err) {
+//         return res.status(500).json({
+//             resCode: 500,
+//             resMessage: err
+//         });
+//     }
+// };
 const getAllDatasetByProblemId = async (req, res) => {
     try {
         let dataset = await Dataset.findAll({
@@ -267,8 +267,8 @@ module.exports = {
     deleteDatasetById,
     updateDatasetById,
     getAllDataset,
-    getAllDatasetByGroupId,
-    getAllDatasetBySubGroupId,
+    // getAllDatasetByGroupId,
+    // getAllDatasetBySubGroupId,
     getAllDatasetByProblemId,
     getDatasetById
 };

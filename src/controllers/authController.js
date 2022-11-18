@@ -5,22 +5,21 @@ const jwt = require('jsonwebtoken');
 const register = async (req, res) => {
     try {
         let newUserData = req.body;
+        newUserData.role = 'user'
         if (
             !newUserData.username ||
             !newUserData.password ||
             !newUserData.email ||
             !newUserData.firstName ||
-            !newUserData.lastName
+            !newUserData.lastName || 
+            !newUserData.role 
         ) {
             return res.status(400).json({
                 resCode: 400,
                 resMessage: 'Missing input value(s).'
             });
         }
-        let isEmailExist = await isEmailExisted(newUserData.email);
-        console.log(123);
         let isUsernameExist = await isUsernameExisted(newUserData.username);
-        console.log(234);
         if (isUsernameExist) {
             return res.status(400).json({
                 resCode: 400,
@@ -28,26 +27,18 @@ const register = async (req, res) => {
                     'Username already existed, please choose another name.'
             });
         }
-        if (isEmailExist) {
-            return res.status(400).json({
-                resCode: 400,
-                resMessage: 'Email already used, please choose another email.'
-            });
-        }
         let salt = await bcrypt.genSalt(10);
         let encodedPassword = await bcrypt.hash(newUserData.password, salt);
         let newUser = new User({
-            role: newUserData.role,
             username: newUserData.username,
             password: encodedPassword,
             email: newUserData.email,
             firstName: newUserData.firstName,
-            lastName: newUserData.lastName
+            lastName: newUserData.lastName,
+            role: newUserData.role,
         });
         let resData = newUser.dataValues;
-        console.log(456);
         await newUser.save();
-        console.log(789);
         delete resData.password;
         return res.status(200).json({
             resCode: 200,
@@ -141,28 +132,7 @@ const isUsernameExisted = (username) => {
         }
     });
 };
-const isEmailExisted = (email) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let user = await User.findOne({
-                attributes: {
-                    exclude: ['password']
-                },
-                where: {
-                    email: email
-                },
-                raw: true
-            });
-            if (user) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-        } catch (err) {
-            reject(err);
-        }
-    });
-};
+
 module.exports = {
     register,
     login

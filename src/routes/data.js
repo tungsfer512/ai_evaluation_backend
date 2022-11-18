@@ -24,16 +24,16 @@ dataRouter.put(
     DataController.updateDatasetById
 );
 // Read
-dataRouter.get(
-    '/groups/subgroups/:subGroupId',
-    MiddlewareController.verify_Token,
-    DataController.getAllDatasetBySubGroupId
-);
-dataRouter.get(
-    '/groups/:groupId',
-    MiddlewareController.verify_Token,
-    DataController.getAllDatasetByGroupId
-);
+// dataRouter.get(
+//     '/groups/subgroups/:subGroupId',
+//     MiddlewareController.verify_Token,
+//     DataController.getAllDatasetBySubGroupId
+// );
+// dataRouter.get(
+//     '/groups/:groupId',
+//     MiddlewareController.verify_Token,
+//     DataController.getAllDatasetByGroupId
+// );
 dataRouter.get(
     '/problems/:problemId',
     MiddlewareController.verify_Token,

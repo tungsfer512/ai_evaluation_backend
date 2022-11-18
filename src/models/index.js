@@ -37,7 +37,6 @@ const User = sequelize.define(
         role: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'user'
         }
     },
     {
@@ -86,15 +85,15 @@ const SubGroup = sequelize.define(
         description: {
             type: DataTypes.STRING,
             allowNull: false
-        }, 
+        },
         groupId: {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: 'Group',
                 key: 'id'
-            },
-        },
+            }
+        }
     },
     {
         tableName: 'SubGroup',
@@ -126,14 +125,14 @@ const Problem = sequelize.define(
         outputDescription: {
             type: DataTypes.STRING,
             allowNull: false
-        }, 
+        },
         groupId: {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: 'Group',
                 key: 'id'
-            },
+            }
         },
         subGroupId: {
             type: DataTypes.UUID,
@@ -141,8 +140,8 @@ const Problem = sequelize.define(
             references: {
                 model: 'SubGroup',
                 key: 'id'
-            },
-        },
+            }
+        }
     },
     {
         tableName: 'Problem',
@@ -170,15 +169,15 @@ const Dataset = sequelize.define(
         description: {
             type: DataTypes.STRING,
             allowNull: false
-        }, 
+        },
         problemId: {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: 'Problem',
                 key: 'id'
-            },
-        },
+            }
+        }
     },
     {
         tableName: 'Dataset',
@@ -219,14 +218,14 @@ const Submission = sequelize.define(
         description: {
             type: DataTypes.STRING,
             allowNull: false
-        }, 
+        },
         userId: {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: 'User',
                 key: 'id'
-            },
+            }
         },
         problemId: {
             type: DataTypes.UUID,
@@ -234,7 +233,7 @@ const Submission = sequelize.define(
             references: {
                 model: 'Problem',
                 key: 'id'
-            },
+            }
         }
     },
     {
@@ -255,5 +254,5 @@ module.exports = {
     SubGroup,
     Problem,
     Dataset,
-    Submission,
+    Submission
 };

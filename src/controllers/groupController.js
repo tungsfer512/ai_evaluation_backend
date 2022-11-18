@@ -10,7 +10,10 @@ const addNewGroup = async (req, res) => {
                 resMessage: 'Missing input value(s).'
             });
         }
-        let newGroup = new Group(newGroupData);
+        let newGroup = new Group({
+            title: newGroupData.title, 
+            description: newGroupData.description
+        });
         await newGroup.save();
         return res.status(200).json({
             resCode: 200,
@@ -33,25 +36,11 @@ const addNewSubGroup = async (req, res) => {
                 resMessage: 'Missing input value(s).'
             });
         }
-        // let newSubGroup = new SubGroup({
-        //     title: newSubGroupData.title, 
-        //     description: newSubGroupData.description, 
-        //     groupId: newSubGroupData.groupId
-        // });
-        let newSubGroup = await SubGroup.create({
+        let newSubGroup = new SubGroup({
             title: newSubGroupData.title,
             description: newSubGroupData.description,
             groupId: newSubGroupData.groupId
         });
-        await SubGroup.update(
-            {
-                GroupId: newSubGroupData.groupId
-            }, {
-            where: {
-                id: newSubGroup.id
-            }, raw: true
-        });
-        console.log(newSubGroup.groupId, newSubGroupData.groupId);
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
