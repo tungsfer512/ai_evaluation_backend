@@ -1,4 +1,4 @@
-const { Problem } = require('../models/index');
+const { Problem, SubGroup, Group } = require('../models/index');
 
 // Create
 const addNewProblem = async (req, res) => {
@@ -134,6 +134,22 @@ const getAllProblem = async (req, res) => {
                 resCode: 404,
                 resMessage: 'Problem not found.'
             });
+        }
+        for( let i = 0; i < problems.length; i++) {
+            let subGroup = await SubGroup.findOne({
+                where: {
+                    id: problems[i].subGroupId
+                }, 
+                raw: true
+            });
+            let group = await Group.findOne({
+                where: {
+                    id: subGroup.groupId
+                }, 
+                raw: true
+            });
+            problems[i].subGroup = subGroup;
+            problems[i].group = group;
         }
         return res.status(200).json({
             resCode: 200,
