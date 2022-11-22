@@ -11,4 +11,10 @@ hubRouter.get(
     HubController.findAvailableHub
 );
 
+hubRouter.post(
+    '/evaluate',
+    MiddlewareController.verify_Token,
+    HubController.evaluate
+);
+
 module.exports = hubRouter;
