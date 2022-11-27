@@ -50,7 +50,7 @@ Run command **```npm install```** to install all libraries used in this project
 - **```npm run format```**: Format the project with the structure described in file **```package.json```**
 - **```npm run dev```**: Format + run project with hot reload
 
-> On the first run, you need to create a user with role **```superadmin```** to manage the system. You can use the API **```POST /api/v1/auth/register```** to create an account with role **```user```**. Then, you can update the role of this user to **```superadmin```** in the database.
+> On the first run, you need to create a user with role **```superadmin```** to manage the system. You can use the API **```POST /api/v1/auth/register```** to create an account with role **```user```**. Then, you can update the role of this user to **```superadmin```** in the database. If you use the example data, you can skip this step.
 >
 > Next, you can use the API **```POST /api/v1/auth/login```** to get the access token and refresh token. You can use the access token to access the APIs that need authentication. You can use the refresh token to get a new access token when the access token is expired
 >
