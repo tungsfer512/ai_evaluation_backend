@@ -1,12 +1,11 @@
 const axios = require('axios');
-const delay = require('delay')
+const delay = require('delay');
 
 const AUTH_TOKEN = 'token 6b31ae0a90ca4ea9a6b8911cf0d9ad7d';
 
 axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json, text/plain, */*';
-
 
 const findAvailableHub = async (req, res) => {
     try {
@@ -30,7 +29,7 @@ const findAvailableHub = async (req, res) => {
                     if (patchResponse) {
                         return res.status(200).json({
                             resCode: 200,
-                            resMessage: "OK",
+                            resMessage: 'OK',
                             data: {
                                 username: patchResponse.data.name,
                                 token: newPassword
@@ -42,14 +41,13 @@ const findAvailableHub = async (req, res) => {
         }
         return res.status(404).json({
             resCode: 404,
-            resMessage: "Not found"
-        })
-
+            resMessage: 'Not found'
+        });
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
             resMessage: 'Somethings went wrong'
-        })
+        });
     }
 };
 
@@ -57,11 +55,13 @@ const evaluate = async (req, res) => {
     try {
         let username = req.body.username;
         console.log(req.body);
-        let nbConvert = await axios.post('https://kube-connect.zcode.vn/nbconvert',
+        let nbConvert = await axios.post(
+            'https://kube-connect.zcode.vn/nbconvert',
             {
                 username: username,
                 filename: 'predict5121.ipynb'
-            });
+            }
+        );
         // console.log(nbConvert);
         if (nbConvert.data.code !== 0) {
             return res.status(500).json({
@@ -69,11 +69,10 @@ const evaluate = async (req, res) => {
                 resMessage: 'Somethings went wrong 1'
             });
         }
-        let cpRes = await axios.post('https://kube-connect.zcode.vn/cp',
-            {
-                username: username,
-                src_filename: '/home/jovyan/predict5121.html'
-            });
+        let cpRes = await axios.post('https://kube-connect.zcode.vn/cp', {
+            username: username,
+            src_filename: '/home/jovyan/predict5121.html'
+        });
         // console.log(cpRes);
         if (cpRes.data.code !== 0) {
             return res.status(500).json({
@@ -83,16 +82,16 @@ const evaluate = async (req, res) => {
         }
         return res.status(200).json({
             resCode: 200,
-            resMessage: "OK",
+            resMessage: 'OK',
             data: cpRes.data
         });
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
             resMessage: 'Somethings went wrong 123'
-        })
+        });
     }
-}
+};
 
 module.exports = {
     findAvailableHub,

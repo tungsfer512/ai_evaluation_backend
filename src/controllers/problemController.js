@@ -135,17 +135,17 @@ const getAllProblem = async (req, res) => {
                 resMessage: 'Problem not found.'
             });
         }
-        for( let i = 0; i < problems.length; i++) {
+        for (let i = 0; i < problems.length; i++) {
             let subGroup = await SubGroup.findOne({
                 where: {
                     id: problems[i].subGroupId
-                }, 
+                },
                 raw: true
             });
             let group = await Group.findOne({
                 where: {
                     id: subGroup.groupId
-                }, 
+                },
                 raw: true
             });
             problems[i].subGroup = subGroup;
