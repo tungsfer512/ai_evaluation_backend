@@ -14,7 +14,13 @@ const findAvailableHub = async (req, res) => {
         let data = response.data;
         for (let i = 0; i < data.length; i++) {
             let server = data[i];
-            if (server.admin === false && server.server === null) {
+            let servers = server.servers?.[''];
+            if (
+                server.admin === false &&
+                server.server === null &&
+                server.name !== 'server01' &&
+                (!servers)
+            ) {
                 const postResponse = await axios.post(
                     `https://hub.zcode.vn/hub/api/users/${server.name}/server`
                 );
@@ -62,22 +68,20 @@ const evaluate = async (req, res) => {
                 filename: 'predict5121.ipynb'
             }
         );
-        // console.log(nbConvert);
         if (nbConvert.data.code !== 0) {
             return res.status(500).json({
                 resCode: 500,
-                resMessage: 'Somethings went wrong 1'
+                resMessage: 'Somethings went wrong'
             });
         }
         let cpRes = await axios.post('https://kube-connect.zcode.vn/cp', {
             username: username,
             src_filename: '/home/jovyan/predict5121.html'
         });
-        // console.log(cpRes);
         if (cpRes.data.code !== 0) {
             return res.status(500).json({
                 resCode: 500,
-                resMessage: 'Somethings went wrong 12'
+                resMessage: 'Somethings went wrong'
             });
         }
         return res.status(200).json({
@@ -88,7 +92,7 @@ const evaluate = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             resCode: 500,
-            resMessage: 'Somethings went wrong 123'
+            resMessage: 'Somethings went wrong'
         });
     }
 };
