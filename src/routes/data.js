@@ -37,7 +37,7 @@ dataRouter.put(
 dataRouter.get(
     '/problems/:problemId',
     MiddlewareController.verify_Token,
-    DataController.getAllDatasetByProblemId
+    DataController.getDatasetByProblemId
 );
 dataRouter.get(
     '/:datasetId',

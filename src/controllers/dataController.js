@@ -215,9 +215,9 @@ const getAllDataset = async (req, res) => {
 //         });
 //     }
 // };
-const getAllDatasetByProblemId = async (req, res) => {
+const getDatasetByProblemId = async (req, res) => {
     try {
-        let dataset = await Dataset.findAll({
+        let dataset = await Dataset.findOne({
             where: {
                 problemId: req.params.problemId
             },
@@ -275,6 +275,6 @@ module.exports = {
     getAllDataset,
     // getAllDatasetByGroupId,
     // getAllDatasetBySubGroupId,
-    getAllDatasetByProblemId,
+    getDatasetByProblemId,
     getDatasetById
 };

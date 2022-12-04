@@ -1,5 +1,5 @@
 const axios = require('axios');
-const delay = require('delay');
+const { Dataset } = require('../models/index');
 
 const AUTH_TOKEN = 'token 6b31ae0a90ca4ea9a6b8911cf0d9ad7d';
 
@@ -59,13 +59,39 @@ const findAvailableHub = async (req, res) => {
 
 const evaluate = async (req, res) => {
     try {
-        let username = req.body.username;
         console.log(req.body);
+        let username = req.body.username;
+        let problemId = req.body.problemId;
+        let dataset = await Dataset.findOne({
+            where: {
+                problemId: problemId
+            },
+            raw: true
+        });
+        if (!dataset) {
+            return res.status(404).json({
+                resCode: 404,
+                resMessage: 'Dataset not found.'
+            });
+        }
+        let loadData = await axios.post(
+            'https://kube-connect.zcode.vn/cp_video',
+            {
+                username: username,
+                src_filename: dataset.title
+            }
+        );
+        if (loadData.data.code !== 0) {
+            return res.status(500).json({
+                resCode: 500,
+                resMessage: 'Somethings went wrong'
+            });
+        };
         let nbConvert = await axios.post(
             'https://kube-connect.zcode.vn/nbconvert',
             {
                 username: username,
-                filename: 'predict5121.ipynb'
+                filename: 'predict.ipynb'
             }
         );
         if (nbConvert.data.code !== 0) {
@@ -76,14 +102,40 @@ const evaluate = async (req, res) => {
         }
         let cpRes = await axios.post('https://kube-connect.zcode.vn/cp', {
             username: username,
-            src_filename: '/home/jovyan/predict5121.html'
+            src_filename: '/home/jovyan/predicted3.csv'
         });
         if (cpRes.data.code !== 0) {
             return res.status(500).json({
                 resCode: 500,
                 resMessage: 'Somethings went wrong'
             });
-        }
+        };
+        let removeDataset = await axios.post(
+            'https://kube-connect.zcode.vn/rm', 
+            {
+                username: username,
+                filename: dataset.title
+            }
+        )
+        if(removeDataset.data.code !== 0) {
+            return res.status(500).json({
+                resCode: 500,
+                resMessage: 'Somethings went wrong'
+            });
+        };
+        let removeResultFile = await axios.post(
+            'https://kube-connect.zcode.vn/rm', 
+            {
+                username: username,
+                filename: "predicted3.csv"
+            }
+        )
+        if (removeResultFile.data.code !== 0) {
+            return res.status(500).json({
+                resCode: 500,
+                resMessage: 'Somethings went wrong'
+            });
+        };
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
