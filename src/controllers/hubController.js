@@ -86,7 +86,7 @@ const evaluate = async (req, res) => {
                 resCode: 500,
                 resMessage: 'Somethings went wrong'
             });
-        };
+        }
         let nbConvert = await axios.post(
             'https://kube-connect.zcode.vn/nbconvert',
             {
@@ -109,33 +109,33 @@ const evaluate = async (req, res) => {
                 resCode: 500,
                 resMessage: 'Somethings went wrong'
             });
-        };
+        }
         let removeDataset = await axios.post(
-            'https://kube-connect.zcode.vn/rm', 
+            'https://kube-connect.zcode.vn/rm',
             {
                 username: username,
                 filename: dataset.title
             }
-        )
-        if(removeDataset.data.code !== 0) {
+        );
+        if (removeDataset.data.code !== 0) {
             return res.status(500).json({
                 resCode: 500,
                 resMessage: 'Somethings went wrong'
             });
-        };
+        }
         let removeResultFile = await axios.post(
-            'https://kube-connect.zcode.vn/rm', 
+            'https://kube-connect.zcode.vn/rm',
             {
                 username: username,
-                filename: "predicted3.csv"
+                filename: 'predicted3.csv'
             }
-        )
+        );
         if (removeResultFile.data.code !== 0) {
             return res.status(500).json({
                 resCode: 500,
                 resMessage: 'Somethings went wrong'
             });
-        };
+        }
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
