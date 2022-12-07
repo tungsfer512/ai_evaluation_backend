@@ -102,7 +102,7 @@ const evaluate = async (req, res) => {
         }
         let cpRes = await axios.post('https://kube-connect.zcode.vn/cp', {
             username: username,
-            src_filename: '/home/jovyan/predicted3.csv'
+            src_filename: '/home/jovyan/predicted.csv'
         });
         if (cpRes.data.code !== 0) {
             return res.status(500).json({
@@ -127,7 +127,7 @@ const evaluate = async (req, res) => {
             'https://kube-connect.zcode.vn/rm',
             {
                 username: username,
-                filename: 'predicted3.csv'
+                filename: 'predicted.csv'
             }
         );
         if (removeResultFile.data.code !== 0) {
