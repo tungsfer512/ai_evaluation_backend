@@ -318,6 +318,6 @@ module.exports = {
     getAllSubmissionBySubGroupId,
     getAllSubmissionByProblemId,
     getAllSubmissionByUserId,
-    getSubmissionById, 
+    getSubmissionById,
     getAllSubmissionByUserIdAndProblemId
 };

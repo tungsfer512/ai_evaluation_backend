@@ -12,6 +12,7 @@ const findAvailableHub = async (req, res) => {
         let newPassword = Math.random().toString(36).slice(-8);
         const response = await axios.get('https://hub.zcode.vn/hub/api/users');
         let data = response.data;
+        console.log(data);
         for (let i = 0; i < data.length; i++) {
             let server = data[i];
             let servers = server.servers?.[''];
@@ -136,7 +137,7 @@ const evaluate = async (req, res) => {
                 resMessage: 'Somethings went wrong'
             });
         }
-        // Get evaluation result  
+        // Get evaluation result
 
         return res.status(200).json({
             resCode: 200,
