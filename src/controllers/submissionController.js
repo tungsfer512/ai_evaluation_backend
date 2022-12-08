@@ -255,6 +255,33 @@ const getAllSubmissionByUserId = async (req, res) => {
         });
     }
 };
+const getAllSubmissionByUserIdAndProblemId = async (req, res) => {
+    try {
+        let submission = await Submission.findAll({
+            where: {
+                userId: req.params.userId,
+                problemId: req.params.problemId
+            },
+            raw: true
+        });
+        if (!submission) {
+            return res.status(404).json({
+                resCode: 404,
+                resMessage: 'Submission not found.'
+            });
+        }
+        return res.status(200).json({
+            resCode: 200,
+            resMessage: 'OK',
+            data: submission
+        });
+    } catch (err) {
+        return res.status(500).json({
+            resCode: 500,
+            resMessage: err
+        });
+    }
+};
 const getSubmissionById = async (req, res) => {
     try {
         let submission = await Submission.findOne({
@@ -291,5 +318,6 @@ module.exports = {
     getAllSubmissionBySubGroupId,
     getAllSubmissionByProblemId,
     getAllSubmissionByUserId,
-    getSubmissionById
+    getSubmissionById, 
+    getAllSubmissionByUserIdAndProblemId
 };

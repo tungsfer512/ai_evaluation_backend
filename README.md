@@ -166,6 +166,7 @@ Run command **```npm install```** to install all libraries used in this project
 | **Admin+** | **GET** | **```/api/v1/submissions/groups/subgroups/:subGroupId```** | None | Get all submissions by subGroup id |
 | **Admin+** | **GET** | **```/api/v1/submissions/groups/:groupId```** | None | Get all submissions by group id |
 | **Admin+** | **GET** | **```/api/v1/submissions/problems/:problemId```** | None | Get all submissions by problem id |
+| **User+** | **GET** | **```/api/v1/submissions/problems/:problemId/users/:userId```** | None | Get all submissions by problem id and user id |
 | **User+** | **GET** | **```/api/v1/submissions/users/:userId```** | None | Get all submissions by user id |
 | **User+** | **GET** | **```/api/v1/submissions/:submissionId```** | None | Get submission by id |
 | **Admin+** | **GET** | **```/api/v1/submissions```** | None | Get all submission |

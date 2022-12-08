@@ -19,7 +19,7 @@ const findAvailableHub = async (req, res) => {
                 server.admin === false &&
                 server.server === null &&
                 server.name !== 'server01' &&
-                (!servers)
+                !servers
             ) {
                 const postResponse = await axios.post(
                     `https://hub.zcode.vn/hub/api/users/${server.name}/server`
@@ -136,6 +136,8 @@ const evaluate = async (req, res) => {
                 resMessage: 'Somethings went wrong'
             });
         }
+        // Get evaluation result  
+
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',

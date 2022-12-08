@@ -40,6 +40,11 @@ submissionRouter.get(
     SubmissionController.getAllSubmissionByProblemId
 );
 submissionRouter.get(
+    '/problems/:problemId/users/:userId',
+    MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
+    SubmissionController.getAllSubmissionByUserIdAndProblemId
+);
+submissionRouter.get(
     '/users/:userId',
     MiddlewareController.verify_Token_UserId_Admin_Superadmin_Role,
     SubmissionController.getAllSubmissionByUserId
