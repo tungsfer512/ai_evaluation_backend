@@ -81,7 +81,7 @@ const addNewDataset = async (req, res) => {
             newSampleData.title = `${sample_names[i]}`;
             newSampleData.path = `${videosRoot}/${resData.path}/${sample_names[i]}`;
             newSampleData.truth = `${resultsRoot}/${resData.path}/${result_names[i]}`;
-            console.log(req.files['videos'][i].size);
+            // console.log(req.files['videos'][i].size);
             newSampleData.size = req.files['videos'][i].size;
             let sample = new Sample({
                 title: newSampleData.title,
@@ -104,7 +104,7 @@ const addNewDataset = async (req, res) => {
                             resMessage: err
                         });
                     }
-                    console.log('Upload files successfull');
+                    console.log('Upload videos successfull');
                     minioClient.fPutObject(
                         bucket,
                         `${resultsRoot}/${newDataset.path}/${result_names[i]}`,
@@ -116,7 +116,7 @@ const addNewDataset = async (req, res) => {
                                     resMessage: err
                                 });
                             }
-                            console.log('Upload files successfull');
+                            console.log('Upload truth file successfull');
                             if (i == sample_names.length - 1) {
                                 return res.status(200).json({
                                     resCode: 200,
@@ -178,7 +178,7 @@ const deleteDatasetById = async (req, res) => {
                     resMessage: e
                 });
             }
-            console.log('Removed the samples successfully');
+            console.log('Removed samples successfully');
             minioClient.removeObjects(bucket, resultsName, (err) => {
                 if (err) {
                     return res.status(500).json({
@@ -186,7 +186,7 @@ const deleteDatasetById = async (req, res) => {
                         resMessage: err
                     });
                 }
-                console.log('Removed the truths successfully');
+                console.log('Removed truths successfully');
                 return res.status(200).json({
                     resCode: 200,
                     resMessage: 'OK',
@@ -273,7 +273,7 @@ const addNewSamples = async (req, res) => {
                             resMessage: err
                         });
                     }
-                    console.log('Upload files successfull');
+                    console.log('Upload videos successfull');
                     minioClient.fPutObject(
                         bucket,
                         `${resultsRoot}/${dataset.path}/${result_names[i]}`,
@@ -285,7 +285,7 @@ const addNewSamples = async (req, res) => {
                                     resMessage: err
                                 });
                             }
-                            console.log('Upload files successfull');
+                            console.log('Upload truth successfull');
                             if (i == sample_names.length - 1) {
                                 return res.status(200).json({
                                     resCode: 200,
@@ -326,7 +326,6 @@ const deleteSampleById = async (req, res) => {
             raw: true
         });
         let videoPath = `${sample.path}`;
-        console.log(videoPath);
         let resultPath = `${sample.truth}`;
         console.log(videoPath, resultPath);
         minioClient.removeObject(bucket, videoPath, async (err) => {
@@ -336,7 +335,6 @@ const deleteSampleById = async (req, res) => {
                     resMessage: err
                 });
             }
-            console.log(123);
             minioClient.removeObject(bucket, resultPath, async (err) => {
                 if (err) {
                     return res.status(500).json({
@@ -344,7 +342,7 @@ const deleteSampleById = async (req, res) => {
                         resMessage: err
                     });
                 }
-                console.log('Removed the object');
+                console.log('Removed samples and truths');
                 return res.status(200).json({
                     resCode: 200,
                     resMessage: 'OK'
@@ -377,7 +375,6 @@ const getAllDataset = async (req, res) => {
             });
             datasets[i].numberOfSamples = datasets[i].samples.length;
         }
-        console.log(435);
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',
@@ -467,7 +464,7 @@ const checkMinio = async (req, res) => {
             });
         });
         dataStream.on('error', function (err) {
-            console.log(err);
+            return console.log(err);
         });
     });
 };

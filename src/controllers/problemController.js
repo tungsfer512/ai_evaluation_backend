@@ -30,7 +30,7 @@ const resultsRoot = process.env.MINIO_RESULT_ROOT;
 const addNewProblem = async (req, res) => {
     try {
         let newProblemData = req.body;
-        console.log(newProblemData);
+        // console.log(newProblemData);
         if (
             !newProblemData.title ||
             !newProblemData.description ||
@@ -342,7 +342,6 @@ const getProblemById = async (req, res) => {
         });
         const jsonArray = await csv().fromFile(`./src/downloads/samples/${problem.outputSample}`);
         problem.outputTable = jsonArray.slice(0, 10);
-        console.log(JSON.parse(problem.outputTable[0]['bounding_box']));
         return res.status(200).json({
             resCode: 200,
             resMessage: 'OK',

@@ -153,10 +153,11 @@ const evaluate = async (req, res) => {
         let loadData = await axios.post(
             `${process.env.KUBE_END_POINT}/cp_video`,
             {
-                username: username,
+                username: 'tiennv',
                 src_filename: videosRoot + '/' + dataset.path
             }
         );
+        console.log(loadData);
         if (loadData.data.code !== 0) {
             return res.status(500).json({
                 resCode: 500,
@@ -164,19 +165,19 @@ const evaluate = async (req, res) => {
             });
         }
         console.log("uploaded video to hub");
-        // let nbConvert = await axios.post(
-        //     `${process.env.KUBE_END_POINT}/nbconvert`,
-        //     {
-        //         username: username,
-        //         filename: 'predict.ipynb'
-        //     }
-        // );
-        // if (nbConvert.data.code !== 0) {
-        //     return res.status(500).json({
-        //         resCode: 500,
-        //         resMessage: 'Somethings went wrong'
-        //     });
-        // }
+        let nbConvert = await axios.post(
+            `${process.env.KUBE_END_POINT}/nbconvert`,
+            {
+                username: 'tiennv',
+                filename: 'predict.ipynb'
+            }
+        );
+        if (nbConvert.data.code !== 0) {
+            return res.status(500).json({
+                resCode: 500,
+                resMessage: 'Somethings went wrong'
+            });
+        }
         console.log("ran file predict from hub");
         let samples = await Sample.findAll({
             where: {
@@ -196,7 +197,7 @@ const evaluate = async (req, res) => {
                 );
                 console.log(name);
                 let cpRes = await axios.post(`${process.env.KUBE_END_POINT}/cp`, {
-                    username: username,
+                    username: 'tiennv',
                     src_filename: `/home/jovyan/${name}`
                 });
                 if (cpRes.data.code !== 0) {
@@ -206,11 +207,10 @@ const evaluate = async (req, res) => {
                     });
                 }
                 console.log(`uploaded file predicted to k8s ${name}`);
-
                 let removeResultFile = await axios.post(
                     `${process.env.KUBE_END_POINT}/rm`,
                     {
-                        username: username,
+                        username: 'tiennv',
                         filename: name
                     }
                 );
@@ -226,7 +226,7 @@ const evaluate = async (req, res) => {
         let removeDataset = await axios.post(
             `${process.env.KUBE_END_POINT}/rm`,
             {
-                username: username,
+                username: 'tiennv',
                 filename: dataset.path
             }
         );
@@ -276,12 +276,12 @@ const evaluate = async (req, res) => {
                 submissionId: submit.dataValues.id
             })
             await subDetail.save();
-            console.log(`evaluated save 2`);
+            console.log(`evaluated save details`);
         }
         let resData = submit.dataValues;
         resData.problem = problem;
-        console.log(resData);
         await axios.delete(`${process.env.HUB_END_POINT}/users/${username}/server`)
+        await delay(1000 * 60 * 2);
         return res.status(200).json({
             resCode: 200,   
             resMessage: 'OK',
@@ -296,14 +296,11 @@ const evaluate = async (req, res) => {
 };
 
 const test = async (req, res) => {
-    let sample = await Sample.findOne({
-        where: {
-            datasetId: req.body.datasetId
-        },
-        order: ['size'],
-        raw: true
+    let cpRes2 = await axios.post(`${process.env.KUBE_END_POINT}/cp`, {
+        username: 'tiennv',
+        src_filename: `/home/jovyan/1.jpg`
     });
-    return res.status(200).json(sample);
+    return res.status(200).json(cpRes2.data);
 }
 
 module.exports = {
